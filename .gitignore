@@ -1,7 +1,9 @@
-node_modules
-db
+/node_modules/
 coverage
 docs
+/.idea/
+
+
 .DS_Store
 .git
 .tmp
