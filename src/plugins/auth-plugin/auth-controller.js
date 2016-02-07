@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = function(Logger, AuthService) {
   var log = Logger.getLogger('auth-controller');
   var AuthController = {};

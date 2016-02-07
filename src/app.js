@@ -34,17 +34,25 @@ program.register('tokenSecret', 'SHHH!');
 program.plugin('Logger', require('./plugins/logger'));
 program.plugin('db', require('./plugins/db'));
 
-//var AuthPlugin = require('./plugins/auth-plugin');
+var AppPlugin = require('./plugins/app-plugin');
+var AuthPlugin = require('./plugins/auth-plugin');
+
 //program.plugin('AuthPlugin', require('./plugins/auth-plugin'));
 //program.plugin('AuthService', AuthPlugin.Service);
 //program.factory('AuthController', authControllerFactory);
 
 //program.plugin('AuthController', require('./plugins/auth-plugin/auth-controller'));
 //var authController = program.get('AuthController');
+//var authService = require('./auth-service');
+//var authController = require('./auth-controller');
+//plugin(app, authService, authController, db);
 
 //App plugins
 //require('./plugins/app-plugin')(app);
 program.inject(require('./plugins/app-plugin'));
+program.inject(require('./plugins/auth-plugin'));
+program.inject(require('./plugins/blog-plugin'));
+
 
 //IoC plugins
 var plugin = require('./plugins/ioc-plugin')();
