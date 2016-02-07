@@ -10,11 +10,16 @@
   "scripts": {
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "docs": "esdoc -c esdoc.json",
+    
     "mocha": "mocha src/**/*-spec.js",
-    "posttest": "npm run coveralls",
-    "prepublish": "npm run docs",
+    "clean": "rimraf .tmp ./docs ./coverage",
+    "build": "npm run publish",
+    
+    "prepublish": "npm run test",
+    "publish": "npm run docs",
     "start": "node src/app.js",
-    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
+    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "pretest": "npm run clean",
     "watch": "nodemon -w src src/app.js",
     "watch-test": "nodemon -w src/ --exec 'npm run test'"
   },
@@ -37,6 +42,7 @@
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "nodemon": "^1.8.1",
+    "rimraf": "^2.5.1",
     "supertest": "^1.1.0"
   }
 }
