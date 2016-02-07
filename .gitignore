@@ -1,6 +1,7 @@
 node_modules
 db
 coverage
+docs
 .DS_Store
 .git
 .tmp
