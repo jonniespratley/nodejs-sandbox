@@ -14,8 +14,6 @@
     "mocha": "mocha src/**/*-spec.js",
     "clean": "rimraf .tmp ./docs ./coverage",
     "build": "npm run publish",
-
-    "prepublish": "npm run test",
     "publish": "npm run docs",
     "start": "node src/app.js",
     "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
