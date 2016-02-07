@@ -8,13 +8,8 @@ const errorHandler = require('errorhandler');
 const PORT = 8000;
 
 
-var routes = require('./routes');
-var asyncModule = require('./asyncModule');
+//var routes = require('./routes');
 
-
-asyncModule.initialize(function () {
-    log('asyncModule.js initialized');
-});
 
 
 var app = module.exports = express();
