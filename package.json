@@ -8,18 +8,16 @@
     "url": "https://github.com/jonniespratley/nodejs-sandbox.git"
   },
   "scripts": {
+    "build": "npm run publish",
+    "clean": "rimraf .tmp ./docs ./coverage",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "docs": "esdoc -c esdoc.json",
-    
     "mocha": "mocha src/**/*-spec.js",
-    "clean": "rimraf .tmp ./docs ./coverage",
-    "build": "npm run publish",
-    
-    "prepublish": "npm run test",
+    "posttest": "npm run coveralls",
+    "pretest": "npm run clean",
     "publish": "npm run docs",
     "start": "node src/app.js",
-    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "pretest": "npm run clean",
+    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
     "watch": "nodemon -w src src/app.js",
     "watch-test": "nodemon -w src/ --exec 'npm run test'"
   },
@@ -28,13 +26,18 @@
   "dependencies": {
     "args-list": "^0.3.3",
     "body-parser": "^1.14.2",
+    "connect-flash": "^0.1.1",
     "debug": "^2.2.0",
+    "ejs": "^2.4.1",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "express-validator": "^2.19.1",
     "level": "^1.4.0",
     "level-sublevel": "^6.5.4",
     "leveldown": "^1.4.4",
-    "levelup": "^1.3.1"
+    "levelup": "^1.3.1",
+    "serve-static": "^1.10.2"
   },
   "devDependencies": {
     "coveralls": "^2.11.6",
