@@ -16,7 +16,7 @@
   "lint": true,
   "test": {
     "type": "mocha",
-    "source": "./src",
+    "source": "./test",
     "includes": ["-spec\\.(js|es6)$"],
     "excludes": ["\\.config\\.(js|es6)$"]
   },

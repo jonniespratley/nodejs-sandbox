@@ -1,8 +1,13 @@
-node_modules
-db
+/node_modules/
 coverage
 docs
+/.idea/
+
+
 .DS_Store
 .git
 .tmp
+.c9
 *-db
+npm-debug.log
+db
