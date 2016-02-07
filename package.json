@@ -8,10 +8,12 @@
     "url": "https://github.com/jonniespratley/nodejs-sandbox.git"
   },
   "scripts": {
-    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
     "docs": "esdoc -c esdoc.json",
+    "mocha": "mocha src/**/*-spec.js",
     "start": "node src/app.js",
-    "mocha": "mocha src/**/*-spec.js"
+    "prepublish": "npm run docs",
+    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
+    "watch": "nodemon -w src src/app.js"
   },
   "author": "Jonnie Spratley",
   "license": "ISC",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
+    "nodemon": "^1.8.1",
     "supertest": "^1.1.0"
   }
 }

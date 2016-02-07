@@ -28,7 +28,7 @@ app.use(errorHandler());
 program.register('app', app);
 program.register('program', program);
 program.register('namespace', 'sandbox');
-program.register('dbName', 'example-db');
+program.register('dbName', 'db');
 program.register('tokenSecret', 'SHHH!');
 
 program.plugin('Logger', require('./plugins/logger'));
