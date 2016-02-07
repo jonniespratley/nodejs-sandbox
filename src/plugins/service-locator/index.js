@@ -11,7 +11,6 @@ module.exports = function() {
   serviceLocator.register = function(name, instance) { //[2]
     dependencies[name] = instance;
   };
-
   serviceLocator.get = function(name) { //[3]
     if (!dependencies[name]) {
       var factory = factories[name];

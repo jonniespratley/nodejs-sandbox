@@ -6,42 +6,50 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
 
+
+const PORT = 8000;
+
+
 var routes = require('./routes');
 var asyncModule = require('./asyncModule');
 
-const PORT = 8000;
+
 asyncModule.initialize(function() {
   log('asyncModule.js initialized');
 });
 
-
-
-var diContainer = require('./plugins/di-container')();
-var AuthPlugin = require('./plugins/auth-plugin');
-var authServiceFactory = AuthPlugin.Service;
-var authControllerFactory = AuthPlugin.Controller;
-
-diContainer.register('diContainer', diContainer);
-diContainer.register('namespace', 'nodejs-sandbox');
-diContainer.register('dbName', 'example-db');
-diContainer.register('tokenSecret', 'SHHH!');
-
-diContainer.plugin('Logger', require('./plugins/logger'));
-diContainer.plugin('db', require('./plugins/db'));
-diContainer.plugin('AuthPlugin', AuthPlugin);
-diContainer.plugin('AuthService', AuthPlugin.Service);
-//diContainer.plugin('AuthController', require('./plugins/auth-plugin/auth-controller'));
-
-var authController = diContainer.get('AuthPlugin').Controller;
+var program = require('./plugins/di-container')('app');
 var app = module.exports = express();
-
-
 app.use(bodyParser.json());
-app.post('/register', authController.register);
-app.post('/login', authController.login);
-app.get('/checkToken', authController.checkToken);
 app.use(errorHandler());
 
+
+
+program.register('app', app);
+program.register('program', program);
+program.register('namespace', 'sandbox');
+program.register('dbName', 'example-db');
+program.register('tokenSecret', 'SHHH!');
+
+program.plugin('Logger', require('./plugins/logger'));
+program.plugin('db', require('./plugins/db'));
+
+//var AuthPlugin = require('./plugins/auth-plugin');
+//program.plugin('AuthPlugin', require('./plugins/auth-plugin'));
+//program.plugin('AuthService', AuthPlugin.Service);
+//program.factory('AuthController', authControllerFactory);
+
+//program.plugin('AuthController', require('./plugins/auth-plugin/auth-controller'));
+//var authController = program.get('AuthController');
+
+//App plugins
+//require('./plugins/app-plugin')(app);
+program.inject(require('./plugins/app-plugin'));
+
+//IoC plugins
+var plugin = require('./plugins/ioc-plugin')();
+app[plugin.method](plugin.route, plugin.handler);
+
 http.createServer(app).listen(PORT, function() {
-  log('Express server started');
+  log('Express server started on port', PORT);
 });

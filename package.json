@@ -8,8 +8,9 @@
     "url": "https://github.com/jonniespratley/nodejs-sandbox.git"
   },
   "scripts": {
+    "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
     "start": "node src/app.js",
-    "test": "mocha src/**/*-spec.js"
+    "mocha": "mocha src/**/*-spec.js"
   },
   "author": "Jonnie Spratley",
   "license": "ISC",
@@ -25,6 +26,8 @@
     "levelup": "^1.3.1"
   },
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "supertest": "^1.1.0"
   }
 }

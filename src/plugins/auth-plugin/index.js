@@ -1,6 +1,10 @@
 'use strict';
-
-module.exports = {
-  Controller: require('./auth-controller'),
-  Service: require('./auth-service')
+module.exports = function(app) {
+  //app.post('/register', authController.register);
+  //app.post('/login', authController.login);
+  //app.get('/checkToken', authController.checkToken);
+  return {
+    Controller: require('./auth-controller'),
+    Service: require('./auth-service')
+  };
 };

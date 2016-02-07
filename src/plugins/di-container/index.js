@@ -7,17 +7,21 @@ module.exports = function() {
   var diContainer = {};
 
   diContainer.plugin = function(name, factory) {
+    console.log('plugin', name);
     factories[name] = factory;
   };
   diContainer.factory = function(name, factory) {
+    console.log('factory', name);
     factories[name] = factory;
   };
 
   diContainer.register = function(name, dep) {
+    console.log('register', name);
     dependencies[name] = dep;
   };
 
   diContainer.get = function(name) {
+    console.log('get', name);
     if (!dependencies[name]) {
       var factory = factories[name];
       dependencies[name] = factory &&
