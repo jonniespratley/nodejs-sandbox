@@ -1,5 +1,11 @@
 'use strict';
 const express = require('express');
+const serveStatic = require('serve-static');
+const flash = require('connect-flash');
+const path = require('path');
+const ejs = require('ejs');
+const session = require('express-session');
+const validator = require('express-validator');
 
 module.exports = function (program) {
 
@@ -14,6 +20,15 @@ module.exports = function (program) {
     //  var log = Logger.getLogger('blog-plugin');
     var blog = express();
     var blogAdmin = express();
+    blog.set('views', path.resolve(__dirname, './views'));
+    blog.set('view engine', 'ejs');
+    blog.engine('html', ejs.renderFile);
+
+
+    blog.use('/blog', serveStatic(path.resolve(__dirname, './views')));
+
+    blog.use(flash());
+
 
     blog.route('/:id?')
         .all(function (req, res, next) {
@@ -29,7 +44,7 @@ module.exports = function (program) {
             next();
         })
         .get(function (req, res, next) {
-            if(req.params.id){
+            if (req.params.id) {
                 return BlogController.get(req, res, next);
             }
             res.status(200).json({
