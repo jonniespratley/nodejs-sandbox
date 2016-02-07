@@ -1,13 +1,16 @@
 'use strict';
+'use strict';
+const path = require('path');
 const assert = require('assert');
 const express = require('express');
 const request = require('supertest');
 const plugin = require('./');
-const program = require('../../app');
+const program = require(path.resolve(__dirname, '../../program'));
 
+
+program.inject(plugin);
 
 var app = program.get('app');
-plugin(program);
 
 describe('blog-plugin', function() {
 
@@ -15,27 +18,34 @@ describe('blog-plugin', function() {
     assert(plugin);
   });
 
-  it('GET - / - should return 200', function(done) {
+  xit('GET - /blog - should return 200', function(done) {
     request(app)
-      .get('/')
+      .get('/blog')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
 
-  it('POST - / - should return 201', function(done) {
+  xit('GET - /blog/admin - should return 200', function(done) {
     request(app)
-      .post('/')
+      .get('/blog/admin')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+
+  it('POST - /blog/admin - should return 201', function(done) {
+    request(app)
+      .post('/blog/admin')
       .send({
-        id: 'home-page',
+        id: 'about-page',
         title: 'Home'
       })
       .expect('Content-Type', /json/)
       .expect(201, done);
   });
 
-  it('PUT - /:id - should return 200', function(done) {
+  it('PUT - /blog/:id - should return 200', function(done) {
     request(app)
-      .put('/home-page')
+      .put('/blog/admin/home-page')
       .send({
         id: 'home-page',
         title: 'Home',
@@ -45,9 +55,9 @@ describe('blog-plugin', function() {
       .expect(200, done);
   });
 
-  it('DELETE - /:id - should return 200', function(done) {
+  it('DELETE - /blog/:id - should return 200', function(done) {
     request(app)
-      .delete('/home-page')
+      .delete('/blog/admin/home-page')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });

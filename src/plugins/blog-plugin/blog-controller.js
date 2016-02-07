@@ -9,7 +9,7 @@ module.exports = function(Logger, BlogService) {
   };
 
   BlogController.get = function(req, res, next) {
-    BlogService.get(req.query.token, function(err, result) {
+    BlogService.get(req.params.id, function(err, result) {
       if (err) {
         res.status(404).json(err);
       }
@@ -33,7 +33,7 @@ module.exports = function(Logger, BlogService) {
       if (err) {
         res.status(404).json(err);
       }
-      res.status(200).json(result);
+      res.status(201).json(result);
     });
   };
 
