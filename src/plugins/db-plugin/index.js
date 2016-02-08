@@ -2,9 +2,13 @@
 const debug = require('debug');
 const level = require('level');
 const sublevel = require('level-sublevel');
+const Logger = require('../logger')('db-plugin');
+
 
 module.exports = function (dbName) {
-    var log = debug('db');
+
+    var log = Logger.getLogger(dbName);
+
     var db = sublevel(
         level(dbName, {
             valueEncoding: 'json'
@@ -14,16 +18,17 @@ module.exports = function (dbName) {
 
     db.createReadStream()
         .on('data', function (data) {
-            log(data.key, '=', data.value);
+
+            log('stream', 'data', `${data.key} = ${data.value}`);
         })
         .on('error', function (err) {
-            log('Oh my!', err);
+            log('stream', 'error', err);
         })
         .on('close', function () {
-            log('Stream closed');
+            log('stream', 'close');
         })
         .on('end', function () {
-            log('Stream closed');
+            log('stream', 'end');
         });
 
     return db;
