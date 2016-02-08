@@ -4,8 +4,8 @@ const assert = require('assert');
 const express = require('express');
 const request = require('supertest');
 const plugin = require('./');
-const program = require(path.resolve(__dirname, '../../program'));
-
+const Program = require(path.resolve(__dirname, '../../program'));
+var program = new Program('test');
 
 
 program.inject(plugin);

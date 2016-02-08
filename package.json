@@ -16,9 +16,9 @@
     "posttest": "npm run coveralls",
     "pretest": "npm run clean",
     "publish": "npm run docs",
-    "start": "node src/app.js",
+    "start": "node index.js",
     "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
-    "watch": "nodemon -w src src/app.js",
+    "watch": "nodemon -w src index.js",
     "watch-test": "nodemon -w src/ --exec 'npm run test'"
   },
   "author": "Jonnie Spratley",

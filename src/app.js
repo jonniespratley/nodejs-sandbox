@@ -5,18 +5,19 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
-const PORT = 8000;
 
 
 //var routes = require('./routes');
+class App {
+    constructor(options) {
+        log('constructor', options);
+
+        this.instance = express();
+        this.instance.use(bodyParser.json());
+        this.instance.use(errorHandler());
+        return this.instance;
+    }
+}
 
 
-
-var app = module.exports = express();
-app.use(bodyParser.json());
-app.use(errorHandler());
-
-
-http.createServer(app).listen(PORT, function () {
-    log('Express server started on port', PORT);
-});
+module.exports = App;

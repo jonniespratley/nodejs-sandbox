@@ -5,10 +5,11 @@ const assert = require('assert');
 const express = require('express');
 const request = require('supertest');
 const plugin = require('./');
-const program = require(path.resolve(__dirname, '../../program'));
 
+const Program = require(path.resolve(__dirname, '../../program'));
 
-program.inject(plugin);
+var program = new Program('test');
+program.use(plugin);
 
 var app = program.get('app');
 
@@ -18,9 +19,18 @@ describe('blog-plugin', function() {
     assert(plugin);
   });
 
+  it('GET - /blog/posts - should return 200', function(done) {
+    request(app)
+      .get('/blog/posts')
+      .set('Accept', 'text/html')
+      .expect('Content-Type', /html/)
+      .expect(200, done);
+  });
+
   xit('GET - /blog - should return 200', function(done) {
     request(app)
       .get('/blog')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
@@ -61,7 +71,6 @@ describe('blog-plugin', function() {
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
-
 
 
 });
