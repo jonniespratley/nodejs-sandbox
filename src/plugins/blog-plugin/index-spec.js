@@ -27,7 +27,7 @@ describe('blog-plugin', function() {
       .expect(200, done);
   });
 
-  xit('GET - /blog - should return 200', function(done) {
+  it('GET - /blog - should return 200', function(done) {
     request(app)
       .get('/blog')
       .set('Accept', 'application/json')
@@ -35,9 +35,10 @@ describe('blog-plugin', function() {
       .expect(200, done);
   });
 
-  xit('GET - /blog/admin - should return 200', function(done) {
+  it('GET - /blog/admin - should return 200', function(done) {
     request(app)
       .get('/blog/admin')
+        .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
