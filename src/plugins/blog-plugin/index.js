@@ -36,6 +36,7 @@ module.exports = function(program) {
       console.log('admin middleware');
       next();
     })
+    .get(BlogController.get)
     .put(BlogController.put)
     .post(BlogController.post)
     .delete(BlogController.remove);

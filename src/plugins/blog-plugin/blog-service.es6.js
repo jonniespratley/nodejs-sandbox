@@ -10,7 +10,7 @@ module.exports = function(db, Logger) {
 
     post(post, callback) {
       log('post', post);
-      post.id = `post-${Date.now()}`;
+      post.id = post.id || `post-${Date.now()}`;
       posts.put(post.id, post, callback);
     }
 

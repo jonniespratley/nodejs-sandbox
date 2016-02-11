@@ -5,6 +5,7 @@ module.exports = function(Logger, BlogService) {
   class BlogController {
     constructor() {
       console.log('This is the constructor.');
+      return this;
     }
 
     index(req, res, next) {
@@ -13,16 +14,17 @@ module.exports = function(Logger, BlogService) {
     }
 
     renderPosts(req, res, next) {
-      log('posts', req.url);
+      log('renderPosts', req.url);
       res.render('posts');
     }
 
     renderPost(req, res, next) {
-      log('post', req.url);
+      log('renderPost', req.url);
       res.render('post');
     }
 
     get(req, res, next) {
+      log('getPost', req.url);
       BlogService.get(req.params.id, (err, result) => {
         if (err) {
           res.status(404).json(err);
@@ -62,6 +64,5 @@ module.exports = function(Logger, BlogService) {
     }
   }
 
-
-  return BlogController;
+  return new BlogController();
 };
