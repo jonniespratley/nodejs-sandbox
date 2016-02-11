@@ -4,7 +4,7 @@ module.exports = function(Logger, BlogService) {
 
   class BlogController {
     constructor() {
-      console.log('This is the constructor.');
+      log('This is the constructor.');
       return this;
     }
 
