@@ -27,8 +27,8 @@ module.exports = function (program) {
     blog.use('/blog', serveStatic(path.resolve(__dirname, './views')));
     blog.use(flash());
 
-    blog.get('/posts', BlogController.posts);
-    blog.get('/post', BlogController.post);
+    blog.get('/', BlogController.renderPosts);
+    blog.get('/posts/:id', BlogController.renderPost);
     blog.route('/:id?').all(function (req, res, next) {
             console.log('middleware', req.method, req.url);
             next();

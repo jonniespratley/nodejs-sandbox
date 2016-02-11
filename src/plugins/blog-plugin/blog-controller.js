@@ -31,12 +31,12 @@ module.exports = function(Logger, BlogService) {
     res.render('index');
   };
 
-  BlogController.posts = function(req, res, next) {
+  BlogController.renderPosts = function(req, res, next) {
     log('posts', req.url);
     res.render('posts');
   };
 
-  BlogController.post = function(req, res, next) {
+  BlogController.renderPost = function(req, res, next) {
     log('post', req.url);
     res.render('post');
   };
