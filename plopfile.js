@@ -1,5 +1,5 @@
 const modulePath = "app/modules/{{camelCase name}}.js";
-const SRC_PATH = 'app/script';
+const SRC_PATH = 'src/';
 
 module.exports = function (plop) {
 	plop.addHelper("upperCase", function (text) {
