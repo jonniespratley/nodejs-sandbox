@@ -37,11 +37,12 @@ describe('UsersPlugin', function () {
                 .get('/users')
                 .expect(200, done);
         });
-        it('GET - /users/:id - should return 200', function (done) {
+        xit('GET - /users/:id - should return 200', function (done) {
             request(app)
                 .get('/users/1')
                 .expect(200, done);
         });
+
         it('POST - /users - should return 200', function (done) {
             request(app)
                 .post('/users')
@@ -58,6 +59,11 @@ describe('UsersPlugin', function () {
                     id: 1,
                     name: 'updated-user'
                 })
+                .expect(200, done);
+        });
+        xit('DELETE - /users/:id - should return 200', function (done) {
+            request(app)
+                .delete('/users/1')
                 .expect(200, done);
         });
     });
