@@ -1,32 +1,31 @@
 'use strict';
-import express = require('express');
-import path = require('path');
-import bodyParser = require('body-parser');
+var express = require('express');
+var bodyParser = require('body-parser');
+var UsersController = require('./users-controller.js');
+;
 /**
  * @class         Users
  * @module        Users
  * @constructor
  */
-export default function routes() {
-
+function routes() {
     var app = new express.Router();
-
-
     console.log('Router Constructor');
     var users = [
-        {id: 0, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00},
-        {id: 1, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00},
-        {id: 2, name: 'sunglasses', description: 'Protect your eyes in style', price: 25.00}
+        { id: 0, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00 },
+        { id: 1, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00 },
+        { id: 2, name: 'sunglasses', description: 'Protect your eyes in style', price: 25.00 }
     ];
-
     app.use(bodyParser.json());
-    
-
-// curl -X GET http://localhost:3000/users
-    app.get('/users', function (req, res) {
-        res.json(users);
-    });
-// curl -X GET http://localhost:3000/users/2
+    var controller = new UsersController();
+    var router = new express.Router();
+    router
+        .all('/users/:id', controller.all)
+        .get(controller.get_route)
+        .post(bodyParser.json(), controller.post_route)
+        .put(bodyParser.json(), controller.put_route);
+    app.use('/admin', router);
+    // curl -X GET http://localhost:3000/users/2
     app.get('/users/:id', function (req, res) {
         if (req.params.id > (users.length - 1) || req.params.id < 0) {
             res.statusCode = 404;
@@ -34,7 +33,7 @@ export default function routes() {
         }
         res.json(users[req.params.id]);
     });
-// curl -X POST -d "name=flops&description=sandals&price=12.00" http://localhost:3000/users
+    // curl -X POST -d "name=flops&description=sandals&price=12.00" http://localhost:3000/users
     app.post('/users', bodyParser.json(), function (req, res) {
         console.log(req.body);
         if (typeof req.body.name === 'undefined') {
@@ -44,7 +43,7 @@ export default function routes() {
         users.push(req.body);
         res.send(req.body);
     });
-// curl -X PUT -d "name=flipflops&description=sandals&price=12.00" http://localhost:3000/users/3
+    // curl -X PUT -d "name=flipflops&description=sandals&price=12.00" http://localhost:3000/users/3
     app.put('/users/:id', bodyParser.json(), function (req, res) {
         if (req.params.id > (users.length - 1) || req.params.id < 0) {
             res.statusCode = 404;
@@ -53,7 +52,7 @@ export default function routes() {
         users[req.params.id] = req.body;
         res.send(req.body);
     });
-// curl -X DELETE http://localhost:3000/users/2
+    // curl -X DELETE http://localhost:3000/users/2
     app.delete('/users/:id', function (req, res) {
         if (req.params.id > (users.length - 1) || req.params.id < 0) {
             req.statusCode = 404;
@@ -62,8 +61,6 @@ export default function routes() {
         users.splice(req.params.id, 1);
         res.json(users);
     });
-
-
     return app;
-
 }
+exports.default = routes;

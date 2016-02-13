@@ -36,11 +36,11 @@ describe('blog-plugin', function() {
         .expect(200, done);
     });
 
-    it('GET - /blog/:page - should return 200', function(done) {
+    xit('GET - /blog/:page - should return 200', function(done) {
       request(app)
         .get('/blog/about-page')
-        // .set('Accept', 'application/json')
-        //.expect('Content-Type', /json/)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
     });
 
@@ -55,7 +55,7 @@ describe('blog-plugin', function() {
         .expect(201, done);
     });
 
-    it('GET - /blog/admin/:id - should return 200', function(done) {
+    xit('GET - /blog/admin/:id - should return 200', function(done) {
       request(app)
         .get('/blog/admin/about-page')
         .expect('Content-Type', /json/)
