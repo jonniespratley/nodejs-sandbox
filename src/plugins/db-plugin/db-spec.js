@@ -58,6 +58,7 @@ describe('db-plugin', function () {
             done();
         });
     });
+
     it('del() - should remove key value', function (done) {
         db.del('name', function (err, value) {
             if (err) {
