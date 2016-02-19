@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
+      "commit": "99c4fb76b5d941939ba53e61d0daee4bd74f150f"
     },
     "fs-extra/fs-extra.d.ts": {
       "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
@@ -15,13 +15,13 @@
       "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
     },
     "mime/mime.d.ts": {
-      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
+      "commit": "99c4fb76b5d941939ba53e61d0daee4bd74f150f"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
+      "commit": "99c4fb76b5d941939ba53e61d0daee4bd74f150f"
     },
     "express/express.d.ts": {
-      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
+      "commit": "99c4fb76b5d941939ba53e61d0daee4bd74f150f"
     }
   }
 }

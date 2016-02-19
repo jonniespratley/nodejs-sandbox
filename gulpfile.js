@@ -32,3 +32,34 @@ function notify(options) {
     _.assign(notifyOptions, options);
     notifier.notify(notifyOptions);
 }
+
+
+const ts = require('gulp-typescript');
+const merge = require('merge2');  // Require separate installation
+
+const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps');
+
+var tsProject = ts({
+    noImplicitAny: true,
+    out: 'output.js',
+    module: 'commonjs',
+    target: 'ES5'
+});
+
+gulp.task('scripts', function () {
+
+    var tsResult = gulp.src('src/**/*.ts')
+        .pipe(sourcemaps.init()) // This means sourcemaps will be generated
+        .pipe(ts(tsProject));
+
+    return merge([
+        tsResult.dts.pipe(gulp.dest('release/definitions')),
+        tsResult.js
+            //.pipe(concat('output.js'))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('release/js'))
+    ]);
+});
+
+gulp.task('default', ['scripts']);
