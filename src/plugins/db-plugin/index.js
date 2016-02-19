@@ -4,9 +4,7 @@ const level = require('level');
 const sublevel = require('level-sublevel');
 const Logger = require('../logger')('db-plugin');
 
-
 module.exports = function (dbName) {
-
     var log = Logger.getLogger(dbName);
 
     var db = sublevel(

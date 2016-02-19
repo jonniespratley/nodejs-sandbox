@@ -1,9 +1,17 @@
 'use strict';
 var UsersService = require('./users-service.js');
+class UserModel {
+    constructor(obj) {
+        for (let prop in obj) {
+            this[prop] = obj[prop];
+            console.log('UserModel', prop, '=', obj[prop]);
+        }
+    }
+}
+exports.UserModel = UserModel;
 let users = [
-    { id: 0, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00 },
-    { id: 1, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00 },
-    { id: 2, name: 'sunglasses', description: 'Protect your eyes in style', price: 25.00 }
+    { id: 1, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00 },
+    { id: 2, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00 }
 ];
 /**
  * TODO - Describe what your controller does.
@@ -41,13 +49,11 @@ class UsersController {
         res.json(users[req.params.id]);
     }
     post_route(req, res, next) {
-        console.log(req.body);
-        if (typeof req.body.name === 'undefined') {
-            res.statusCode = 400;
-            res.end('a product name is required');
-        }
-        users.push(req.body);
-        res.send(req.body);
+        var model = new UserModel(req.body);
+        model.id = users.length + 1;
+        console.log('creating', model);
+        users.push(model);
+        res.json(model);
     }
     put_route(req, res, next) {
         if (req.params.id > (users.length - 1) || req.params.id < 0) {
@@ -55,13 +61,13 @@ class UsersController {
             res.end('No product found for that ID');
         }
         users[req.params.id] = req.body;
-        res.send(req.body);
+        res.json(req.body);
     }
     delete_route(req, res, next) {
-        if (!req.id) {
+        if (!req.params.id) {
             req.status(404).json({ error: 'No user found for that ID' });
         }
-        users.splice(req.id, 1);
+        users.splice(req.param.id, 1);
         res.json(users);
     }
 }

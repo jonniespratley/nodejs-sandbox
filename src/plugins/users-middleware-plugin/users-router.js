@@ -21,16 +21,15 @@ function routes() {
         console.error(err.stack);
         res.status(500).send('Something broke!');
     });
-    router
-        .use(controller.use)
-        .all('/:id?', controller.all)
-        .get(controller.get_route)
-        .delete(controller.delete_route)
-        .post(bodyParser.json(), controller.post_route)
-        .put(bodyParser.json(), controller.put_route);
-    app.get('/users', controller.get_route);
+    router.all('/users/*', controller.all);
+    router.get('/users', controller.get_route);
+    router.get('/users/:id?', controller.get_route);
+    router.delete('/users/:id', controller.delete_route);
+    router.post('/users', bodyParser.json(), controller.post_route);
+    router.put('/users/:id', bodyParser.json(), controller.put_route);
+    router.use(controller.use);
     app.use(bodyParser.json());
-    app.use('/users', router);
+    app.use('/', router);
     return app;
 }
 exports.default = routes;

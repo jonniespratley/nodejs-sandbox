@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm run publish",
-    "clean": "rimraf .tmp ./docs ./coverage",
+    "clean": "rimraf .tmp ./data ./db ./test-db ./coverage ./reports",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "docs": "esdoc -c esdoc.json",
     "mocha": "mocha src/**/*-spec.js",
@@ -37,6 +37,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "express-validator": "^2.19.1",
+    "jfs": "^0.2.6",
     "level": "^1.4.0",
     "level-sublevel": "^6.5.4",
     "leveldown": "^1.4.4",
