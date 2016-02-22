@@ -37,6 +37,15 @@ describe('blog-plugin', function() {
     });
 
 
+    xit('GET - /blog/:page - should return 200', function(done) {
+      request(app)
+        .get('/blog/about-page')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
+    });
+
+
     it('POST - /blog/admin - should return 201', function(done) {
       request(app)
         .post('/blog/admin')

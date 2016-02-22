@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+
+    "sourceRoot": "src/",
+    "target": "ES6",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "out": "release/tsc.js",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}
