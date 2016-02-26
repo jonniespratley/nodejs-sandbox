@@ -4,5 +4,5 @@ node_js:
 before_script:
 - node -v
 - npm -v
-service_name: travis-pro
-repo_token: EuWzG5AA8IEW39q8fcufgtXdORXHrGrrp
+#service_name: travis-pro
+#repo_token: EuWzG5AA8IEW39q8fcufgtXdORXHrGrrp
