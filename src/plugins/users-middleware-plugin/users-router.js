@@ -32,4 +32,5 @@ function routes() {
     app.use('/', router);
     return app;
 }
-exports.default = routes;
+exports["default"] = routes;
+//# sourceMappingURL=users-router.js.map

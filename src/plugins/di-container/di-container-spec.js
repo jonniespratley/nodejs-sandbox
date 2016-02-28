@@ -2,16 +2,13 @@
 const assert = require('assert');
 const DIContainer = require('./');
 var mockProgram = null;
-var _program;
-
+var _program = null;
+var container = null;
 var testConfig = {
   username: 'test',
   password: 'test',
   host: 'localhost'
 };
-
-var container = null;
-
 const ApiFactory = function(config) {
   class LocalApi {
     constructor(c) {
@@ -28,7 +25,6 @@ const ApiFactory = function(config) {
   }
   return new LocalApi(config);
 };
-
 const DbService = function(config, someModule) {
   class LocalStore {
     constructor(c) {
@@ -52,7 +48,6 @@ const DbService = function(config, someModule) {
     }
   }
   return new LocalStore(config);
-  //return LocalStore;
 };
 
 describe('DIContainer', function() {

@@ -36,6 +36,7 @@ describe('blog-plugin', function() {
         .expect(200, done);
     });
 
+
     xit('GET - /blog/:page - should return 200', function(done) {
       request(app)
         .get('/blog/about-page')
@@ -43,6 +44,7 @@ describe('blog-plugin', function() {
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
+
 
     it('POST - /blog/admin - should return 201', function(done) {
       request(app)
@@ -61,6 +63,15 @@ describe('blog-plugin', function() {
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
+
+    xit('GET - /blog/:page - should return 200', function(done) {
+      request(app)
+          .get('/blog/about-page')
+          // .set('Accept', 'application/json')
+          //.expect('Content-Type', /json/)
+          .expect(200, done);
+    });
+
 
     it('PUT - /blog/:id - should update post andreturn 200', function(done) {
       request(app)

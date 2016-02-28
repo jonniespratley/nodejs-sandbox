@@ -1,13 +1,13 @@
 'use strict';
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs-extra');
-const express = require('express');
-const request = require('supertest');
-const UsersPlugin = require(path.resolve(__dirname, './index.js')).Users;
-const Router = require(path.resolve(__dirname, './users-router.js'));
-const UserModel = require(path.resolve(__dirname, './users-service.js')).UserModel;
-const UsersService = require(path.resolve(__dirname, './users-service.js')).UsersService;
+var assert = require('assert');
+var path = require('path');
+var fs = require('fs-extra');
+var express = require('express');
+var request = require('supertest');
+var UsersPlugin = require(path.resolve(__dirname, './index.js')).Users;
+var Router = require(path.resolve(__dirname, './users-router.js'));
+var UserModel = require(path.resolve(__dirname, './users-service.js')).UserModel;
+var UsersService = require(path.resolve(__dirname, './users-service.js')).UsersService;
 var service = null;
 var instance = null;
 var app = express();
@@ -182,3 +182,4 @@ describe('UsersPlugin', function () {
         });
     });
 });
+//# sourceMappingURL=index-spec.js.map

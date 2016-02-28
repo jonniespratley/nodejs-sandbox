@@ -1,19 +1,21 @@
 'use strict';
 //import UsersController = require('./users-controller');
 //import UsersService = require('./users-service');
-const UsersRouter = require('./users-router').default;
+var UsersRouter = require('./users-router').default;
 /**
  * @class         Users
  * @module        Users
  * @constructor
  *
  */
-class Users {
+var Users = (function () {
     //controller: UsersController;
-    constructor(app) {
+    function Users(app) {
         console.log('Plugin Constructor');
         // this.router = new UsersRouter(app);
         return this;
     }
-}
+    return Users;
+})();
 exports.Users = Users;
+//# sourceMappingURL=index.js.map
