@@ -19,6 +19,7 @@
     "mocha": "mocha src/**/*-spec.js",
     "posttest": "npm run coveralls",
     "pretest": "npm run clean",
+    "posttest": "npm run coveralls",
     "publish": "npm run docs",
     "start": "node index.js",
     "test": "istanbul cover node_modules/.bin/_mocha -- -R spec src/**/*-spec.js",
