@@ -11,3 +11,5 @@ docs
 *-db
 npm-debug.log
 db
+data
+test-db
