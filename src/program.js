@@ -1,15 +1,41 @@
-var app = require('./app');
-var program = require('./plugins/di-container')('program');
+'use strict';
+const App = require('./app');
+const DiContainer = require('./plugins/di-container');
 
-program.register('app', app);
-program.register('program', program);
-program.register('namespace', 'sandbox');
-program.register('dbName', 'db');
-program.register('tokenSecret', 'SHHH!');
+class Program extends DiContainer {
+    constructor(options) {
+        super('program');
+        this.app = new App(options);
+        this.register('app', this.app);
+        this.register('program', this);
+        this.register('namespace', 'sandbox');
+        this.register('dbName', 'db');
+        this.register('tokenSecret', 'SHHH!');
 
-//program.plugin('serviceLocator', require('./plugins/server-locator'));
-program.plugin('Logger', require('./plugins/logger'));
-program.plugin('db', require('./plugins/db-plugin'));
+        //program.plugin('serviceLocator', require('./plugins/server-locator'));
+        this.plugin('Logger', require('./plugins/logger'));
+        this.plugin('db', require('./plugins/db-plugin'));
+        if (options.run) {
+            this.run(options.run);
+        }
+
+    }
+
+    run(cb) {
+
+        console.log('Program.run');
+        if (cb) {
+            cb(this);
+        }
+    }
+
+    use(plugin) {
+        console.log('Program.use');
+        this.inject(plugin);
+        return this;
+    }
+}
+
 
 //var AppPlugin = require('./plugins/app-plugin');
 //var AuthPlugin = require('./plugins/auth-plugin');
@@ -34,4 +60,4 @@ program.plugin('db', require('./plugins/db-plugin'));
 //IoC plugins
 //var plugin = require('./plugins/ioc-plugin')();
 //app[plugin.method](plugin.route, plugin.handler);
-module.exports = program;
+module.exports = Program;
