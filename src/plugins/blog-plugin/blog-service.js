@@ -1,43 +1,34 @@
-'use strict';
-module.exports = function(db, Logger) {
+"use strict";
+module.exports = function (db, Logger) {
+    const log = Logger.getLogger('blog-service');
+    const posts = db.sublevel('posts');
 
-  var log = Logger.getLogger('blog-service');
-  var posts = db.sublevel('posts');
-  var BlogService = {};
+    class BlogService {
+        constructor() {
+            console.log('This is the constructor.');
+        }
 
-  BlogService.post = function(post, callback) {
-    log('post', post);
-    post.id = 'post-' + Date.now();
-    posts.put(post.id, post, function(err, resp) {
-      callback(err, resp);
-    });
-  };
+        post(post, callback) {
+            log('post', post);
+            post.id = `post-${Date.now()}`;
+            posts.put(post.id, post, callback);
+        }
 
+        put(post, callback) {
+            log('put', post);
+            posts.put(post.id, post, callback);
+        }
 
-  BlogService.put = function(post, callback) {
-    log('post', post);
-    posts.put(post.id, post, function(err, resp) {
-      callback(err, resp);
-    });
-  };
+        get(id, callback) {
+            log('get', id);
+            posts.get(id, callback);
+        }
 
-  BlogService.get = function(id, callback) {
-    log('getPost', id);
-    posts.get(id, function(err, resp) {
-      log('login.response', err, resp);
-      callback(err, resp);
-    });
-  };
+        remove(id, callback) {
+            log('remove', id);
+            posts.del(id, callback);
+        }
+    }
 
-
-  BlogService.remove = function(id, callback) {
-    log('remove', id);
-    posts.del(id, function(err, resp) {
-      log('login.response', err, resp);
-      callback(err, resp);
-    });
-  };
-
-
-  return BlogService;
+    return new BlogService();
 };

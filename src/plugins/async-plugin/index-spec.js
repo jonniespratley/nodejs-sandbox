@@ -11,7 +11,7 @@ describe('async-plugin', function () {
 
     it('should create instance', function (done) {
         this.timeout(5000);
-        asyncModule.initialize(function () {
+        asyncModule.initialize(  function () {
             console.log('asyncModule.js initialized');
             done();
         });

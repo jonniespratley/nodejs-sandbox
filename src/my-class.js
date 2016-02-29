@@ -1,12 +1,11 @@
 import MySuperClass from './my-super-class.js';
 
-
 /**
- * this is MyClass description.
+ * This is MyClass description.
  */
 export default class MyClass extends MySuperClass {
   /**
-   * this is MyClass constructor description.
+   * This is MyClass constructor description.
    * @param {string} [name="anonymous"] - this is name description.
    */
   constructor(name = 'anonymous') {
@@ -15,7 +14,7 @@ export default class MyClass extends MySuperClass {
   }
 
   /**
-   * this is sayMyName description
+   * This is sayMyName description
    * @returns {string} this is return description.
    */
   sayMyName() {

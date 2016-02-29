@@ -38,11 +38,6 @@ describe('db-plugin', function () {
         });
 
         db.put('user-jonnie', 'jonnie', function (err) {
-            if (err) {
-                console.log('Ooops!', err);
-                assert.fail(err);
-                done();
-            }
             done();
         });
 
@@ -50,20 +45,15 @@ describe('db-plugin', function () {
 
     it('get() - should get key value', function (done) {
         db.get('name', function (err, value) {
-            if (err) {
-                assert.fail(err);
-                done();
-            }
+
             assert(value);
             done();
         });
     });
+
     it('del() - should remove key value', function (done) {
         db.del('name', function (err, value) {
-            if (err) {
-                assert.fail(err);
-                done();
-            }
+
             assert(true);
             done();
         });

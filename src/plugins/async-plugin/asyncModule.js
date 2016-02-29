@@ -7,12 +7,13 @@ const log = debug('nodejs-sandbox:asyncModule');
 var asyncModule = {};
 asyncModule.initialized = false;
 
+
 asyncModule.initialize = function (callback) {
     log('initialize');
     setTimeout(function () {
         asyncModule.initialized = true;
         callback();
-    }, 2000);
+    }, 1000);
 };
 
 asyncModule.tellMeSomething = function (callback) {
