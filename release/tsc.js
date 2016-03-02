@@ -1,34 +1,14 @@
 'use strict';
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs-extra');
-const {  } = { pascalCase: name };
-Service = require(path.resolve(__dirname, '{{dashCase name}}-service'));
-var service = null;
-describe('{{dashCase name}} Service', function () {
-    before(function () {
-        service = new {};
-        {
-            pascalCase;
-            name;
-        }
-    }, Service());
-});
-it('should have an instance', function () {
-    assert(service);
-});
-;
-'use strict';
 const path = require('path');
 const assert = require('assert');
 const express = require('express');
 const request = require('supertest');
 const plugin = require('./');
-const Program = require(path.resolve(__dirname, '../../program'));
+const Program = require(path.resolve(__dirname, '../../program')).default;
 var program = new Program('test');
 program.use(plugin);
 var app = program.get('app');
-describe('{{pascalCase name}} plugin', () => {
+describe('AdminPlugin plugin', () => {
     it('should be defined', () => {
         assert(plugin);
     });
@@ -58,34 +38,6 @@ class Greeter {
         return "Hello, " + this.greeting;
     }
 }
-'use strict';
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs-extra');
-const Service = require(path.resolve(__dirname, 'object-object-service'));
-var service = null;
-describe('devices-plugin Service', function () {
-    before(function () {
-        service = new DevicesPluginService();
-    });
-    it('should have an instance', function () {
-        assert(service);
-    });
-});
-'use strict';
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs-extra');
-const Service = require(path.resolve(__dirname, 'object-object-service'));
-var service = null;
-describe('passes-plugin Service', function () {
-    before(function () {
-        service = new PassesPluginService();
-    });
-    it('should have an instance', function () {
-        assert(service);
-    });
-});
 'use strict';
 const assert = require('assert');
 const path = require('path');

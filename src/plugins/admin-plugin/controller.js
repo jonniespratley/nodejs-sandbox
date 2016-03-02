@@ -1,5 +1,5 @@
 'use strict';
-class DevicesPluginController {
+class AdminPluginController {
     constructor(options) {
         console.log('Controller Constructor');
     }
@@ -16,5 +16,5 @@ class DevicesPluginController {
     delete_route(req, res, next) {
     }
 }
-exports.DevicesPluginController = DevicesPluginController;
-//# sourceMappingURL=devices-plugin-controller.js.map
+exports.AdminPluginController = AdminPluginController;
+//# sourceMappingURL=controller.js.map

@@ -1,8 +1,8 @@
 'use strict';
-class DevicesPlugin {
+class AdminPlugin {
     constructor() {
         console.log('Plugin Constructor');
     }
 }
-exports.DevicesPlugin = DevicesPlugin;
+exports.AdminPlugin = AdminPlugin;
 //# sourceMappingURL=index.js.map

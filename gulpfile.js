@@ -42,8 +42,11 @@ function notify(options) {
 var tsProject = ts({
 	noImplicitAny: true,
 	out: 'output.js',
-	module: 'commonjs',
-	target: 'ES6'
+	"target": "ES6",
+	"module": "commonjs",
+	"noImplicitAny": true,
+	"removeComments": true,
+	"preserveConstEnums": true
 });
 
 gulp.task('scripts', function () {

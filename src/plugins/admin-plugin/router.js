@@ -1,5 +1,5 @@
 'use strict';
-class DevicesPluginRouter {
+class AdminPluginRouter {
     constructor() {
         console.log('Router Constructor');
     }
@@ -7,5 +7,5 @@ class DevicesPluginRouter {
         console.log('method1');
     }
 }
-exports.DevicesPluginRouter = DevicesPluginRouter;
-//# sourceMappingURL=devices-plugin-router.js.map
+exports.AdminPluginRouter = AdminPluginRouter;
+//# sourceMappingURL=router.js.map

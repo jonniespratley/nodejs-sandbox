@@ -1,5 +1,5 @@
 'use strict';
-class DevicesPluginService {
+class AdminPluginService {
     constructor() {
         console.log('Service Constructor');
     }
@@ -10,5 +10,5 @@ class DevicesPluginService {
         console.log('method2');
     }
 }
-exports.DevicesPluginService = DevicesPluginService;
-//# sourceMappingURL=devices-plugin-service.js.map
+exports.AdminPluginService = AdminPluginService;
+//# sourceMappingURL=service.js.map
