@@ -7,13 +7,15 @@ import path = require('path');
  * @module        AdminPlugin
  * @constructor
  */
-export class AdminPluginController {
+export default class AdminPluginController {
 	constructor(options) {
 		console.log('Controller Constructor');
 	}
 
 	index(req, res, next) {
-
+		res.status(200).json({
+			message: 'admin plugin index route'
+		});
 	}
 
 	use(req, res, next) {

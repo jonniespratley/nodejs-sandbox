@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const DIContainer = require('./');
+const DIContainer = require('./').default;
 var mockProgram = null;
 var _program = null;
 var container = null;

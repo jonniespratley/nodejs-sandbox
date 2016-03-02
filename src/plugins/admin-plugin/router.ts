@@ -2,21 +2,20 @@
 import express = require('express');
 import path = require('path');
 
+
 /**
  * @class         AdminPlugin
  * @module        AdminPlugin
  * @constructor
  */
-export class AdminPluginRouter {
-	name:string;
-	routes:object;
+export default function AdminPluginRouter(app) {
+    var AdminController = require('./controller').default;
+    var controller = new AdminController();
+    var router = new express.Router();
 
-	constructor() {
-		console.log('Router Constructor');
+    router.get('/admin', controller.index);
+    console.log('Router Constructor');
 
-	}
+    app.use('/', router);
 
-	method1(){
-		console.log('method1');
-	}
 }

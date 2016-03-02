@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const DB = require('./');
+const DB = require('./').default;
 var db = null;
 
 describe('db-plugin', function () {

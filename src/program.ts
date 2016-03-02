@@ -13,8 +13,8 @@ export default class Program extends DiContainer {
         this.register('tokenSecret', 'SHHH!');
 
         //program.plugin('serviceLocator', require('./plugins/server-locator'));
-        this.plugin('Logger', require('./plugins/logger'));
-        this.plugin('db', require('./plugins/db-plugin'));
+        this.plugin('Logger', require('./plugins/logger').default);
+        this.plugin('db', require('./plugins/db-plugin').default);
         if (options.run) {
             this.run(options.run);
         }
@@ -22,7 +22,6 @@ export default class Program extends DiContainer {
     }
 
     run(cb) {
-
         console.log('Program.run');
         if (cb) {
             cb(this);
@@ -30,7 +29,7 @@ export default class Program extends DiContainer {
     }
 
     use(plugin) {
-        console.log('Program.use');
+        console.log('Program.use', plugin);
         this.inject(plugin);
         return this;
     }

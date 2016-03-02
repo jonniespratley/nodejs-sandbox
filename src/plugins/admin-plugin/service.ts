@@ -6,7 +6,7 @@ import path = require('path');
  * @module        AdminPlugin
  * @constructor
  */
-export class AdminPluginService {
+export default class AdminPluginService {
 	name:string;
 	options:object;
 

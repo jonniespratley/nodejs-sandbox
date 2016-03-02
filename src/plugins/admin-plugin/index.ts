@@ -1,18 +1,14 @@
 'use strict';
-import {App} from '../app';
-import express = require('express');
+const express = require('express');
 
 /**
  * @class         AdminPlugin
  * @module        AdminPlugin
  * @constructor
  */
-export class AdminPlugin {
-	name:string;
-	options:object;
+export default function AdminPlugin(app) {
+    const Router = require('./router').default;
 
-	constructor() {
-		console.log('Plugin Constructor');
-	}
-
+    console.log('Plugin Constructor');
+    Router(app);
 }
