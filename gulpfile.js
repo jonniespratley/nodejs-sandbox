@@ -39,18 +39,16 @@ function notify(options) {
 	notifier.notify(notifyOptions);
 }
 
-
 var tsProject = ts({
 	noImplicitAny: true,
 	out: 'output.js',
 	module: 'commonjs',
-	target: 'ES5'
+	target: 'ES6'
 });
 
 gulp.task('scripts', function () {
-
 	var tsResult = gulp.src('src/**/*.ts')
-			.pipe(sourcemaps.init()) // This means sourcemaps will be generated
+			.pipe(sourcemaps.init())
 			.pipe(ts(tsProject));
 
 	return merge([
@@ -71,7 +69,7 @@ gulp.task('clean', function () {
 				'db',
 				'docs',
 				'coverage',
-				'release',
+				//	'release',
 				'test-db'
 			], {read: false})
 			.pipe(rimraf());

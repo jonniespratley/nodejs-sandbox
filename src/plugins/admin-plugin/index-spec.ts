@@ -13,7 +13,7 @@ program.use(plugin);
 var app = program.get('app');
 
 
-describe('{{pascalCase name}} plugin', () => {
+describe('AdminPlugin plugin', () => {
 
     it('should be defined', () => {
         assert(plugin);

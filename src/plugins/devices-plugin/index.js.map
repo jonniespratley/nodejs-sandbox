@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"/Users/predixgo/Github/nodejs-sandbox/src/","sources":["src/plugins/devices-plugin/index.ts"],"names":["DevicesPlugin","DevicesPlugin.constructor"],"mappings":"AAAA,YAAY,CAAC;AASb;IAICA;QACCC,OAAOA,CAACA,GAAGA,CAACA,oBAAoBA,CAACA,CAACA;IACnCA,CAACA;AAEFD,CAACA;AARY,qBAAa,gBAQzB,CAAA"}
