@@ -41,26 +41,26 @@ module.exports = function (plop) {
 			if (answers.wantService) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-service.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/service.ts",
 					templateFile: "plop-templates/nodejs-plugin-service.ts"
 				});
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-service-spec.ts",
-					templateFile: "plop-templates/nodejs-plugin-service-spec.ts"
+					path: SRC_PATH + "/plugins/{{dashCase name}}/index-spec.ts",
+					templateFile: "plop-templates/nodejs-plugin-spec.ts"
 				});
 			}
 			if (answers.wantRouter) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-router.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/router.ts",
 					templateFile: "plop-templates/nodejs-plugin-router.ts"
 				});
 			}
 			if (answers.wantController) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-controller.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/controller.ts",
 					templateFile: "plop-templates/nodejs-plugin-controller.ts"
 				});
 			}

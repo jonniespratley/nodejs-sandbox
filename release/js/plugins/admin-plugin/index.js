@@ -1,0 +1,15 @@
+'use strict';
+/**
+ * @class         AdminPlugin
+ * @module        AdminPlugin
+ * @constructor
+ */
+var AdminPlugin = (function () {
+    function AdminPlugin() {
+        console.log('Plugin Constructor');
+    }
+    return AdminPlugin;
+})();
+exports.AdminPlugin = AdminPlugin;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBsdWdpbnMvYWRtaW4tcGx1Z2luL2luZGV4LnRzIl0sIm5hbWVzIjpbIkFkbWluUGx1Z2luIiwiQWRtaW5QbHVnaW4uY29uc3RydWN0b3IiXSwibWFwcGluZ3MiOiJBQUFBLFlBQVksQ0FBQztBQUliOzs7O0dBSUc7QUFDSDtJQUlDQTtRQUNDQyxPQUFPQSxDQUFDQSxHQUFHQSxDQUFDQSxvQkFBb0JBLENBQUNBLENBQUNBO0lBQ25DQSxDQUFDQTtJQUVGRCxrQkFBQ0E7QUFBREEsQ0FSQSxBQVFDQSxJQUFBO0FBUlksbUJBQVcsY0FRdkIsQ0FBQSIsImZpbGUiOiJwbHVnaW5zL2FkbWluLXBsdWdpbi9pbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbIid1c2Ugc3RyaWN0JztcbmltcG9ydCB7QXBwfSBmcm9tICcuLi9hcHAnO1xuaW1wb3J0IGV4cHJlc3MgPSByZXF1aXJlKCdleHByZXNzJyk7XG5cbi8qKlxuICogQGNsYXNzICAgICAgICAgQWRtaW5QbHVnaW5cbiAqIEBtb2R1bGUgICAgICAgIEFkbWluUGx1Z2luXG4gKiBAY29uc3RydWN0b3JcbiAqL1xuZXhwb3J0IGNsYXNzIEFkbWluUGx1Z2luIHtcblx0bmFtZTpzdHJpbmc7XG5cdG9wdGlvbnM6b2JqZWN0O1xuXG5cdGNvbnN0cnVjdG9yKCkge1xuXHRcdGNvbnNvbGUubG9nKCdQbHVnaW4gQ29uc3RydWN0b3InKTtcblx0fVxuXG59XG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

@@ -1,10 +1,9 @@
 'use strict';
 const debug = require('debug');
-
-module.exports = function(namespace) {
-  var Logger = {};
-  Logger.getLogger = function(category) {
-    return debug(`${namespace}:${category}`);
-  };
-  return Logger;
-};
+class Logger {
+    static getLogger(category) {
+        return debug(`${namespace}:${category}`);
+    }
+}
+exports.Logger = Logger;
+//# sourceMappingURL=index.js.map
