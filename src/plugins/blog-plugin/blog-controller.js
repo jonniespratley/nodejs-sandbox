@@ -16,35 +16,53 @@ module.exports = function (Logger, BlogService) {
 
     BlogController.renderPost = function (req, res, next) {
         log('post', req.url);
-        res.render('post');
+        BlogService.get(req.params.id, function (err, result) {
+            if (err) {
+                res.status(404).send(err);
+            }
+            log('found post', result);
+            res.locals.post = result;
+            res.render('post', {post: result});
+        });
+
     };
 
     BlogController.get = function (req, res, next) {
         BlogService.get(req.params.id, function (err, result) {
             if (err) {
-                res.status(404).json(err);
+                res.status(404).send(err);
             }
-            res.status(200).json(result);
+            log('found post', result);
+            res.locals.post = result;
+            res.status(200).send(result);
         });
     };
 
     BlogController.put = function (req, res, next) {
-        log('put', req.body);
+        log('put', req.params.id, req.body);
+        req.body['id'] = req.params.id;
         BlogService.put(req.body, function (err, result) {
             if (err) {
                 res.status(404).json(err);
             }
-            res.status(200).json(result);
+            res.status(200).json({
+                ok: true,
+                data: req.body
+            });
         });
     };
 
     BlogController.post = function (req, res, next) {
-        log('post', req.body);
+        log('post', req.params.id, req.body);
+        req.body['id'] = req.params.id;
         BlogService.post(req.body, function (err, result) {
             if (err) {
                 res.status(404).json(err);
             }
-            res.status(201).json(result);
+            res.status(201).json({
+                ok: true,
+                data: req.body
+            });
         });
     };
 
