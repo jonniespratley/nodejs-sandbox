@@ -12,17 +12,8 @@ const UsersRouter = require('./users-router').default;
  * @constructor
  *
  */
-export class Users {
-    name:string;
-    options:object;
-    //  service: UsersService;
-    router:UsersRouter;
-    //controller: UsersController;
-
-    constructor(app:express) {
-        console.log('Plugin Constructor');
-        // this.router = new UsersRouter(app);
-        return this;
-    }
-
+export default function UsersPlugin(app) {
+    console.log('Plugin Constructor');
+    this.router = new UsersRouter(app);
+    app.use('/', this.router);
 }

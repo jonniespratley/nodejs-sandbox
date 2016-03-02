@@ -31,7 +31,6 @@ export class UsersController {
         console.log('Controller Constructor');
     }
 
-
     use(req, res, next) {
         console.log('Time: ', Date.now());
         console.log('users-controller.use', req.method, req.url);

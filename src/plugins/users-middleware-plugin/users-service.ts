@@ -3,18 +3,7 @@ import _ = require('lodash');
 import path = require('path');
 //const db = require('../db-plugin')('db');
 const Store = require('jfs');
-
-
-export class UserModel {
-    id:string;
-    constructor(obj:any) {
-        for (let prop in obj) {
-            this[prop] = obj[prop];
-            console.log('UserModel', prop, '=', obj[prop]);
-        }
-        this.id = obj.id || _.uniqueId('user-');
-    }
-}
+const UserModel = require('./user-model').default;
 
 let users = [
     {id: 1, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00},
