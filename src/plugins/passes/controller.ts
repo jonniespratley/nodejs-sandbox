@@ -3,6 +3,7 @@ const path = require('path');
 const assert = require('assert');
 const Model = require('./model').default;
 const Service = require('./service').default;
+let service;
 
 /**
  * TODO - Describe what your controller does.
@@ -11,23 +12,38 @@ const Service = require('./service').default;
  * @module        Passes
  * @constructor
  */
-let service;
 export default class PassesController {
 
     //service:Service;
     model:Model;
     collection:any;
 
+    /**
+     *
+     * @param options
+     */
     constructor(options:any) {
         console.log('PassesController Constructor');
         service = new Service();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     use(req, res, next) {
         console.log('Passes.use', req.method, req.url, req.params);
         next();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     all(req, res, next) {
         if (req.params.id) {
             req.id = req.params.id;
@@ -37,6 +53,12 @@ export default class PassesController {
         next();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     index(req, res, next) {
         next();
     }
@@ -57,6 +79,12 @@ export default class PassesController {
         }
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     post_route(req, res, next) {
         let m = new Model(req.body);
         console.log('creating', m);
@@ -68,6 +96,12 @@ export default class PassesController {
         })
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     put_route(req, res, next) {
         var model = new Model(req.body);
         console.log('updating', req.params.id);
@@ -79,6 +113,12 @@ export default class PassesController {
         });
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     delete_route(req, res, next) {
         assert(req.params.id, 'has id');
         console.log('removing', req.params.id);
