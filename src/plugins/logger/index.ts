@@ -2,9 +2,11 @@
 const debug = require('debug');
 
 export default class Logger {
-
-    static getLogger(category) {
-        return debug(`${namespace}:${category}`);
+    constructor(namespace:string){
+        this.namespace = namespace;
+    }
+    getLogger(category) {
+        return debug(`${this.namespace}:${category}`);
     }
 
 }

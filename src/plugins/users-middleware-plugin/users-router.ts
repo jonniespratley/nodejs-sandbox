@@ -2,7 +2,7 @@
 import express = require('express');
 import path = require('path');
 import bodyParser = require('body-parser');
-import UsersController = require('./users-controller.js');
+const UsersController = require('./users-controller').default;
 /**
  * @class         Users
  * @module        Users
@@ -15,7 +15,7 @@ export default function routes() {
 // curl -X PUT -d "name=flipflops&description=sandals&price=12.00" http://localhost:3000/users/3
 // curl -X DELETE http://localhost:3000/users/2
     var app = express();
-    var controller = new UsersController.UsersController();
+    var controller = new UsersController();
     var router = new express.Router();
 
 

@@ -1,15 +1,7 @@
 'use strict';
-import path = require('path');
-import UsersService = require('./users-service.js');
-
-export class UserModel {
-    constructor(obj:any) {
-        for (let prop in obj) {
-            this[prop] = obj[prop];
-            console.log('UserModel', prop, '=', obj[prop]);
-        }
-    }
-}
+const path = require('path');
+const UserModel = require('./user-model.js').default;
+const UsersService = require('./users-service.js').default;
 
 let users = [
     {id: 1, name: 'watch', description: 'Tell time with this amazing watch', price: 30.00},
@@ -23,11 +15,11 @@ let users = [
  * @module        Users
  * @constructor
  */
-export class UsersController {
+export default class UsersController {
     users:any;
 
     constructor(options) {
-        this.users = new UsersService.UsersService();
+        this.users = new UsersService();
         console.log('Controller Constructor');
     }
 

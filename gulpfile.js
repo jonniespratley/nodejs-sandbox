@@ -92,7 +92,7 @@ gulp.task('clean', function () {
             'db',
             'docs',
             'coverage',
-            //	'release',
+            'release',
             'test-db'
         ], {
             read: false

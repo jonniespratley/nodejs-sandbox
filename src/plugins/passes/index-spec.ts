@@ -1,5 +1,6 @@
 "use strict";
 const assert = require('assert');
+const async = require('async');
 const path = require('path');
 const fs = require('fs-extra');
 const express = require('express');
@@ -19,7 +20,7 @@ let mockObj = {
 };
 
 
-describe('{{pascalCase name}} Plugin', function () {
+describe('Passes Plugin', function () {
 
     it('should be defined', function (done) {
         assert(Plugin);
@@ -44,45 +45,45 @@ describe('{{pascalCase name}} Plugin', function () {
         done();
     });
 
-    describe('{{pascalCase name}} Router', function () {
+    describe('Passes Router', function () {
 
 
-        it('GET - /{{route}} - should return 200', function (done) {
+        it('GET - /passes - should return 200', function (done) {
             request(app)
-                .get('/{{route}}')
+                .get('/passes')
                 .expect(200, done);
         });
 
-        it('POST - /{{route}} - should return 201', function (done) {
+        it('POST - /passes - should return 201', function (done) {
             request(app)
-                .post('/{{route}}')
+                .post('/passes')
                 .send(mockObj)
                 .expect(201, done);
         });
 
-        it('GET - /{{route}}/:id - should return 200', function (done) {
+        it('GET - /passes/:id - should return 200', function (done) {
             request(app)
-                .get('/{{route}}/' + mockObj.id)
+                .get('/passes/' + mockObj.id)
                 .expect(200, done);
         });
 
-        it('PUT - /{{route}}/:id - should return 200', function (done) {
+        it('PUT - /passes/:id - should return 200', function (done) {
             objObj.name = 'updated at' + Date.now();
             request(app)
-                .put('/{{route}}/' + mockObj.id)
+                .put('/passes/' + mockObj.id)
                 .send(mockObj)
                 .expect(200, done);
         });
 
-        it('DELETE - /{{route}}/:id - should return 200', function (done) {
+        it('DELETE - /passes/:id - should return 200', function (done) {
             request(app)
-                .delete('/{{route}}/' + mockObj.id)
+                .delete('/passes/' + mockObj.id)
                 .expect(200, done);
         });
     });
 
     describe('Controller', function () {
-        //
+
     });
 
     describe('Model', function () {
@@ -92,32 +93,56 @@ describe('{{pascalCase name}} Plugin', function () {
             assert(u.id, 'has passed property');
             done();
         });
+
+        it('should return model with unique id', function (done) {
+            let u = new Model({name: 'jonnie'});
+            assert(u);
+            assert(u.id, 'has id property');
+            done();
+        });
     });
 
     describe('Service', function () {
+        let passes = null;
         let testId = '';
         let testUser = new Model({
-            name: 'test'
+            id: 'test-pass-00',
+            name: 'test',
+            type: 'test'
         });
 
         before(function (done) {
             service = new Service();
-            service.save(new Model({name: 'test'})).then(function (resp) {
-                testId = resp;
-                console.log(resp);
+            let m = null
+            let createModel = function (id, callback) {
+               m = new Model({
+                   id: 'test-pass-'+ id,
+                   name: 'test ' + id,
+                   type: 'test'
+               });
+                service.save(m).then(function (resp) {
+                    callback(null, resp);
+                });
+            };
+            async.times(5, function (n, next) {
+                createModel(n, function (err, resp) {
+                    next(err, resp)
+                });
+            }, function (err, _passes) {
+                console.log('created', _passes);
+                passes = _passes
                 done();
             });
-
         });
 
         it('should have an instance', function () {
             assert(service);
         });
 
-        it('find() - should get all users from data store', function (done) {
-            service.find(testUser.id).then(function (resp) {
-                console.log(resp);
+        it('find() - should get all passes from data store', function (done) {
+            service.find({type: 'test'}).then(function (resp) {
                 assert(resp);
+                assert(resp.length);
                 done();
             }).catch(function (err) {
                 assert.fail(err);
@@ -125,7 +150,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() - should save a user to data store', function (done) {
+        it('save() - should save a pass to data store', function (done) {
             service.save(testUser).then(function (resp) {
                 console.log(resp);
                 assert(resp);
@@ -136,9 +161,9 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() should update a user in data store', function (done) {
+        it('save() should update a pass in data store', function (done) {
             service.save({
-                id: 'user-test',
+                id: 'pass-test',
                 email: 'updated@gmail.com'
             }).then(function (resp) {
                 console.log(resp);
@@ -150,18 +175,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() - should reject', function () {
-            service.save({}).then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
-            });
-        });
-
-
-        it('get() - should get a user from data store', function (done) {
+        it('get() - should get a pass from data store', function (done) {
             assert(testId)
             service.get(testId).then(function (resp) {
                 assert(resp);
@@ -172,17 +186,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('get() - should reject', function () {
-            service.get('unknown').then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
-            });
-        });
-
-        it('remove() - should remove a user from data store', function (done) {
+        it('remove() - should remove a pass from data store', function (done) {
             assert(testId)
             service.remove(testId).then(function (resp) {
                 assert(resp);
@@ -193,22 +197,44 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
+        describe('Rejections/Errors', function () {
+            it('save() - should reject', function () {
+                service.save({}).then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
 
-        it('remove() - should reject', function () {
-            service.remove('unknown').then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
+            it('get() - should reject', function () {
+                service.get('unknown').then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
+            it('remove() - should reject', function () {
+                service.remove('unknown').then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
+
+            it('remove() - throw error', function () {
+                assert.throws(function () {
+                    service.remove(null);
+                }, Error);
             });
         });
 
-        it('remove() - throw error', function () {
-            assert.throws(function () {
-                service.remove(null);
-            }, Error);
-        });
+
 
     });
 

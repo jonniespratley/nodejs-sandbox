@@ -9,18 +9,18 @@ const express = require('express');
  * @module        Passes
  * @constructor
  */
-export default class {{pascalCase name}} {
-	name:string;
-	options:object;
-	Controller:Controller;
-	Model:Model;
-	Router:Router;
-	Service:Service;
+export default class Passes {
+    name:string;
+    options:object;
+    Controller:Controller;
+    Model:Model;
+    Router:Router;
+    Service:Service;
 
-	constructor(app:express) {
-		this.Router = new Router(app);
-		console.log('{{pascalCase name}} Plugin Constructor');
+    constructor(app:express) {
+        this.Router = new Router(app);
+        console.log('Plugin Constructor');
 
-	}
+    }
 
 }

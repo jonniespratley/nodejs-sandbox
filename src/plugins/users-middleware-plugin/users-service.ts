@@ -16,7 +16,7 @@ let users = [
  * @module        Users
  * @constructor
  */
-export class UsersService {
+export default class UsersService {
     name:string;
     options:object;
     users:any;

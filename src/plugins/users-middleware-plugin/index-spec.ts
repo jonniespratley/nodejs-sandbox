@@ -8,7 +8,7 @@ const request = require('supertest');
 const UsersPlugin = require(path.resolve(__dirname, './index')).default;
 const Router = require(path.resolve(__dirname, './users-router'));
 const UserModel = require(path.resolve(__dirname, './user-model')).default;
-const UsersService = require(path.resolve(__dirname, './users-service')).UsersService;
+const UsersService = require(path.resolve(__dirname, './users-service')).default;
 var service = null;
 var instance = null;
 

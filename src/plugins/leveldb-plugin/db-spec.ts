@@ -3,10 +3,10 @@ const assert = require('assert');
 const DB = require('./').default;
 var db = null;
 
-describe('db-plugin', function () {
+describe('leveldb-plugin', function () {
 
     before(function () {
-        db = DB('./test-db').sublevel('users');
+        db = new DB('db').sublevel('users');
     });
     after(function () {
         db.close();
