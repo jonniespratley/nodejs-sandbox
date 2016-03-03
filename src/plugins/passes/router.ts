@@ -19,16 +19,16 @@ export default class Router {
         const controller = new Controller();
         const router = express();
 
-        router.all('*', controller.all)
-        router.get('/', controller.get_route);
-        router.get('/:id?', controller.get_route)
-        router.delete('/:id', controller.delete_route)
-        router.post('/', bodyParser.json(), controller.post_route)
-        router.put('/:id', bodyParser.json(), controller.put_route)
         router.use(controller.use);
+        router.all('/passes/*', controller.all);
+        router.get('/passes/:id?', controller.get_route)
+        router.delete('/passes/:id', controller.delete_route)
+        router.post('/passes', bodyParser.json(), controller.post_route)
+        router.put('/passes/:id', bodyParser.json(), controller.put_route)
+
         router.use(bodyParser.json());
 
 
-        app.use('/passes', router);
+        app.use('/', router);
     }
 }

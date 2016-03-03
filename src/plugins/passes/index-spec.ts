@@ -19,6 +19,13 @@ let mockObj = {
     id: 'test-1'
 };
 
+let passes = null;
+let testId = '';
+let testUser = new Model({
+    id: 'test-pass-00',
+    name: 'test',
+    type: 'test'
+});
 
 describe('Passes Plugin', function () {
 
@@ -45,43 +52,6 @@ describe('Passes Plugin', function () {
         done();
     });
 
-    describe('Passes Router', function () {
-
-
-        it('GET - /passes - should return 200', function (done) {
-            request(app)
-                .get('/passes')
-                .expect(200, done);
-        });
-
-        it('POST - /passes - should return 201', function (done) {
-            request(app)
-                .post('/passes')
-                .send(mockObj)
-                .expect(201, done);
-        });
-
-        it('GET - /passes/:id - should return 200', function (done) {
-            request(app)
-                .get('/passes/' + mockObj.id)
-                .expect(200, done);
-        });
-
-        it('PUT - /passes/:id - should return 200', function (done) {
-            objObj.name = 'updated at' + Date.now();
-            request(app)
-                .put('/passes/' + mockObj.id)
-                .send(mockObj)
-                .expect(200, done);
-        });
-
-        it('DELETE - /passes/:id - should return 200', function (done) {
-            request(app)
-                .delete('/passes/' + mockObj.id)
-                .expect(200, done);
-        });
-    });
-
     describe('Controller', function () {
 
     });
@@ -103,13 +73,7 @@ describe('Passes Plugin', function () {
     });
 
     describe('Service', function () {
-        let passes = null;
-        let testId = '';
-        let testUser = new Model({
-            id: 'test-pass-00',
-            name: 'test',
-            type: 'test'
-        });
+
 
         before(function (done) {
             service = new Service();
@@ -140,9 +104,11 @@ describe('Passes Plugin', function () {
         });
 
         it('find() - should get all passes from data store', function (done) {
-            service.find({type: 'test'}).then(function (resp) {
+            service.find().then(function (resp) {
+
                 assert(resp);
                 assert(resp.length);
+                  passes = resp;
                 done();
             }).catch(function (err) {
                 assert.fail(err);
@@ -151,7 +117,7 @@ describe('Passes Plugin', function () {
         });
 
         it('save() - should save a pass to data store', function (done) {
-            service.save(testUser).then(function (resp) {
+            service.save(mockObj).then(function (resp) {
                 console.log(resp);
                 assert(resp);
                 done();
@@ -176,8 +142,7 @@ describe('Passes Plugin', function () {
         });
 
         it('get() - should get a pass from data store', function (done) {
-            assert(testId)
-            service.get(testId).then(function (resp) {
+            service.get(passes[0].id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -187,8 +152,7 @@ describe('Passes Plugin', function () {
         });
 
         it('remove() - should remove a pass from data store', function (done) {
-            assert(testId)
-            service.remove(testId).then(function (resp) {
+            service.remove(passes[0].id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -218,7 +182,7 @@ describe('Passes Plugin', function () {
                 });
             });
             it('remove() - should reject', function () {
-                service.remove('unknown').then(function (resp) {
+                service.remove().then(function (resp) {
                     assert.fail(resp);
                     done();
                 }).catch(function (err) {
@@ -227,15 +191,52 @@ describe('Passes Plugin', function () {
                 });
             });
 
-            it('remove() - throw error', function () {
+            xit('remove() - throw error', function () {
                 assert.throws(function () {
                     service.remove(null);
                 }, Error);
             });
         });
 
-
-
     });
+
+
+        describe('Passes Router', function () {
+
+            it('GET - /passes - should return 200', function (done) {
+                request(app)
+                    .get('/passes')
+                    .expect(200, done);
+            });
+
+            it('POST - /passes - should return 201', function (done) {
+              delete mockObj.id;
+                request(app)
+                    .post('/passes')
+                    .send(mockObj)
+                    .expect(201, done);
+            });
+
+            it('GET - /passes/:id - should return 200', function (done) {
+                request(app)
+                    .get('/passes/' + passes[1].id)
+                    .expect(200, done);
+            });
+
+            it('PUT - /passes/:id - should return 200', function (done) {
+
+                request(app)
+                    .put('/passes/' + passes[1].id)
+                    .send(passes[0])
+                    .expect(200, done);
+            });
+
+            it('DELETE - /passes/:id - should return 200', function (done) {
+                request(app)
+                    .delete('/passes/' + passes[1].id)
+                    .expect(200, done);
+            });
+        });
+
 
 });

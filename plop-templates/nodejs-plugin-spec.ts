@@ -92,32 +92,56 @@ describe('{{pascalCase name}} Plugin', function () {
             assert(u.id, 'has passed property');
             done();
         });
+
+        it('should return model with unique id', function (done) {
+            let u = new Model({name: 'jonnie'});
+            assert(u);
+            assert(u.id, 'has id property');
+            done();
+        });
     });
 
     describe('Service', function () {
+        let passes = null;
         let testId = '';
         let testUser = new Model({
-            name: 'test'
+            id: 'test-pass-00',
+            name: 'test',
+            type: 'test'
         });
 
         before(function (done) {
             service = new Service();
-            service.save(new Model({name: 'test'})).then(function (resp) {
-                testId = resp;
-                console.log(resp);
+            let m = null
+            let createModel = function (id, callback) {
+               m = new Model({
+                   id: 'test-pass-'+ id,
+                   name: 'test ' + id,
+                   type: 'test'
+               });
+                service.save(m).then(function (resp) {
+                    callback(null, resp);
+                });
+            };
+            async.times(5, function (n, next) {
+                createModel(n, function (err, resp) {
+                    next(err, resp)
+                });
+            }, function (err, _passes) {
+                console.log('created', _passes);
+                passes = _passes
                 done();
             });
-
         });
 
         it('should have an instance', function () {
             assert(service);
         });
 
-        it('find() - should get all users from data store', function (done) {
-            service.find(testUser.id).then(function (resp) {
-                console.log(resp);
+        it('find() - should get all passes from data store', function (done) {
+            service.find({type: 'test'}).then(function (resp) {
                 assert(resp);
+                assert(resp.length);
                 done();
             }).catch(function (err) {
                 assert.fail(err);
@@ -125,7 +149,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() - should save a user to data store', function (done) {
+        it('save() - should save a pass to data store', function (done) {
             service.save(testUser).then(function (resp) {
                 console.log(resp);
                 assert(resp);
@@ -136,9 +160,9 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() should update a user in data store', function (done) {
+        it('save() should update a pass in data store', function (done) {
             service.save({
-                id: 'user-test',
+                id: 'pass-test',
                 email: 'updated@gmail.com'
             }).then(function (resp) {
                 console.log(resp);
@@ -150,18 +174,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('save() - should reject', function () {
-            service.save({}).then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
-            });
-        });
-
-
-        it('get() - should get a user from data store', function (done) {
+        it('get() - should get a pass from data store', function (done) {
             assert(testId)
             service.get(testId).then(function (resp) {
                 assert(resp);
@@ -172,17 +185,7 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        it('get() - should reject', function () {
-            service.get('unknown').then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
-            });
-        });
-
-        it('remove() - should remove a user from data store', function (done) {
+        it('remove() - should remove a pass from data store', function (done) {
             assert(testId)
             service.remove(testId).then(function (resp) {
                 assert(resp);
@@ -193,23 +196,46 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
+        describe('Rejections/Errors', function () {
+            it('save() - should reject', function () {
+                service.save({}).then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
 
-        it('remove() - should reject', function () {
-            service.remove('unknown').then(function (resp) {
-                assert.fail(resp);
-                done();
-            }).catch(function (err) {
-                assert(err);
-                done();
+            it('get() - should reject', function () {
+                service.get('unknown').then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
+            it('remove() - should reject', function () {
+                service.remove('unknown').then(function (resp) {
+                    assert.fail(resp);
+                    done();
+                }).catch(function (err) {
+                    assert(err);
+                    done();
+                });
+            });
+
+            it('remove() - throw error', function () {
+                assert.throws(function () {
+                    service.remove(null);
+                }, Error);
             });
         });
 
-        it('remove() - throw error', function () {
-            assert.throws(function () {
-                service.remove(null);
-            }, Error);
-        });
+
 
     });
+
 
 });

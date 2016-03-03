@@ -24,8 +24,8 @@ export default class Service {
 			} else {
 				//this.users = db.sublevel('users');
         this.db = new Store('data', {
-           // type: 'single',
-          //  saveId: '_id',
+            //type: 'single',
+            saveId: '_id',
             pretty: true
         });
 			}
@@ -46,11 +46,12 @@ export default class Service {
         });
     }
 
-    remove(id:any) {
-        if(!id){
-            throw new Erorr('Must provide id!');
-        }
+    remove(id:string) {
         return new Promise((resolve, reject)=> {
+          if(!id){
+            //throw new Error('Must provide id!');
+            reject('Must provide an id!');
+          }
             console.log('remove', id);
             this.db.delete(id, (err, resp)=> {
                 console.log('remove', err, resp);
@@ -65,7 +66,7 @@ export default class Service {
     save(obj:any) {
         return new Promise((resolve, reject)=> {
             console.log('save', obj);
-            this.db.save(obj.id, obj, (err, resp)=> {
+            this.db.save(obj.id || null,  obj, (err, resp)=> {
                 console.log('save', err, resp);
                 if (err) {
                     reject(err);
@@ -90,7 +91,7 @@ export default class Service {
                     console.log('find', params, value);
                     _docs.push(value);
                 });
-                resolve(_.filter(_docs, params));
+                resolve(_.find(_docs, params));
 
             });
         });

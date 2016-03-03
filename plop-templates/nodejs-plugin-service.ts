@@ -77,15 +77,25 @@ export default class Service {
 
     find(params:any) {
         return new Promise((resolve, reject)=> {
+            let _docs = [];
             console.log('find', params);
             this.db.all((err, resp)=> {
                 if (err) {
                     reject(err);
                 }
-                resolve(resp);
+
+                console.log('find', 'response', resp);
+                _.forIn(resp, (value, key) => {
+                    console.log(key);
+                    console.log('find', params, value);
+                    _docs.push(value);
+                });
+                resolve(_.filter(_docs, params));
+
             });
         });
     }
+
 
     static method2() {
         console.log('method2');
