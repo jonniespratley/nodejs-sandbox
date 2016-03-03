@@ -3,7 +3,8 @@ const assert = require('assert');
 const Log = require('./').default;
 const Logger = new Log('test');
 var log = null;
-describe('Logger', function () {
+
+describe('Logger Plugin', function () {
 
     it('should be defined', function () {
         assert(Logger);

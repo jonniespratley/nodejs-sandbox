@@ -47,6 +47,4 @@ describe('app-plugin', function() {
       .expect(200, done);
   });
 
-
-
 });

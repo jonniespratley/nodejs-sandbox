@@ -19,10 +19,11 @@ const coveralls = require('gulp-coveralls');
 const config = {
   tsSrc: [
     'src/**/*.ts',
+    'test/**/*.ts'
   ],
   jsSrc: [
     '!release/**/*-spec.js',
-    'release/**/*.js',
+    'release/**/*.js'
   ],
   specs: [
     //'src/**/*-spec.js',
@@ -97,9 +98,13 @@ gulp.task('watch-coverage', ['pre-test'], function() {
     .pipe(istanbul.writeReports());
 });
 
+gulp.task('watch-compile', function() {
+  return gulp.watch(config.tsSrc, ['typescript']);
+});
 gulp.task('watch', ['watch-test'], function() {
   return gulp.watch(config.tsSrc, ['typescript']);
 });
+
 gulp.task('watch-test', function() {
   return gulp.watch(config.specs, ['watch-coverage']);
 });

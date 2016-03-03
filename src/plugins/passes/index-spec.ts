@@ -39,13 +39,6 @@ describe('Passes Plugin', function () {
         done();
     });
 
-    xit('should have model, controller, service instances', function (done) {
-        assert(instance.Controller);
-        assert(instance.Model);
-        assert(instance.Service);
-        done();
-    });
-
     it('should mount to express app', function (done) {
         new Router(app);
         done();
@@ -73,16 +66,15 @@ describe('Passes Plugin', function () {
 
     describe('Service', function () {
 
-
         before(function (done) {
             service = new Service();
             let m = null
             let createModel = function (id, callback) {
-               m = new Model({
-                   id: 'test-pass-'+ id,
-                   name: 'pass ' + id,
-                   type: 'test'
-               });
+                m = new Model({
+                    id: 'test-pass-' + id,
+                    name: 'pass ' + id,
+                    type: 'test'
+                });
                 service.save(m).then(function (resp) {
                     callback(null, resp);
                 });
@@ -201,46 +193,46 @@ describe('Passes Plugin', function () {
 
     });
 
-        describe('Router', function () {
+    describe('Router', function () {
 
-            it('GET - /passes - should return 200', function (done) {
-                request(app)
-                    .get('/passes')
-                    .set('Content-Type', 'application/json')
-                    .expect(200, done);
-            });
-
-            it('POST - /passes - should return 201', function (done) {
-                request(app)
-                    .post('/passes')
-                    .set('Content-Type', 'application/json')
-                    .send(mockObj)
-                    .expect(201, done);
-            });
-
-            it('GET - /passes/:id - should return 200', function (done) {
-                request(app)
-                    .get('/passes/' + mockObj.id)
-                    .set('Content-Type', 'application/json')
-                    .expect(200, done);
-            });
-
-            it('PUT - /passes/:id - should return 200', function (done) {
-
-                request(app)
-                    .put('/passes/' + mockObj.id)
-                    .set('Content-Type', 'application/json')
-                    .send(mockObj)
-                    .expect(200, done);
-            });
-
-            it('DELETE - /passes/:id - should return 200', function (done) {
-                request(app)
-                    .delete('/passes/' + mockObj.id)
-                    .set('Content-Type', 'application/json')
-                    .expect(200, done);
-            });
+        it('GET - /passes - should return 200', function (done) {
+            request(app)
+                .get('/passes')
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
         });
+
+        it('POST - /passes - should return 201', function (done) {
+            request(app)
+                .post('/passes')
+                .set('Content-Type', 'application/json')
+                .send(mockObj)
+                .expect(201, done);
+        });
+
+        it('GET - /passes/:id - should return 200', function (done) {
+            request(app)
+                .get('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
+        });
+
+        it('PUT - /passes/:id - should return 200', function (done) {
+
+            request(app)
+                .put('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .send(mockObj)
+                .expect(200, done);
+        });
+
+        it('DELETE - /passes/:id - should return 200', function (done) {
+            request(app)
+                .delete('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
+        });
+    });
 
 
 });
