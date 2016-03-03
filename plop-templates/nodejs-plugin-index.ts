@@ -1,18 +1,26 @@
 'use strict';
-import {App} from '../app';
-import express = require('express');
-
+const Controller = require('./controller').default;
+const Model = require('./model').default;
+const Router = require('./router').default;
+const Service = require('./service').default;
+const express = require('express');
 /**
- * @class         {{pascalCase name}}
- * @module        {{pascalCase name}}
+ * @class         Passes
+ * @module        Passes
  * @constructor
  */
-export class {{pascalCase name}} {
+export default class {{pascalCase name}} {
 	name:string;
 	options:object;
+	Controller:Controller;
+	Model:Model;
+	Router:Router;
+	Service:Service;
 
-	constructor() {
-		console.log('Plugin Constructor');
+	constructor(app:express) {
+		this.Router = new Router(app);
+		console.log('{{pascalCase name}} Plugin Constructor');
+
 	}
 
 }
