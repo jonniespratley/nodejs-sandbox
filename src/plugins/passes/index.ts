@@ -9,6 +9,7 @@ const express = require('express');
  * @module        Passes
  * @constructor
  */
+ 
 export default class Passes {
     name:string;
     options:object;

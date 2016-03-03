@@ -22,9 +22,9 @@ let mockObj = {
 let passes = null;
 let testId = '';
 let testUser = new Model({
-    id: 'test-pass-00',
-    name: 'test',
-    type: 'test'
+    id: 'test-user-00',
+    name: 'user',
+    type: 'user'
 });
 
 describe('Passes Plugin', function () {
@@ -81,20 +81,23 @@ describe('Passes Plugin', function () {
             let createModel = function (id, callback) {
                m = new Model({
                    id: 'test-pass-'+ id,
-                   name: 'test ' + id,
+                   name: 'pass ' + id,
                    type: 'test'
                });
                 service.save(m).then(function (resp) {
                     callback(null, resp);
                 });
             };
+
             async.times(5, function (n, next) {
                 createModel(n, function (err, resp) {
                     next(err, resp)
                 });
             }, function (err, _passes) {
+                console.log('================================= BEFORE =================');
                 console.log('created', _passes);
                 passes = _passes
+                mockObj = _passes[1];
                 done();
             });
         });
@@ -104,11 +107,11 @@ describe('Passes Plugin', function () {
         });
 
         it('find() - should get all passes from data store', function (done) {
-            service.find().then(function (resp) {
-
+            service.find({
+                type: 'test'
+            }).then(function (resp) {
                 assert(resp);
                 assert(resp.length);
-                  passes = resp;
                 done();
             }).catch(function (err) {
                 assert.fail(err);
@@ -129,7 +132,7 @@ describe('Passes Plugin', function () {
 
         it('save() should update a pass in data store', function (done) {
             service.save({
-                id: 'pass-test',
+                id: 'test-1',
                 email: 'updated@gmail.com'
             }).then(function (resp) {
                 console.log(resp);
@@ -142,7 +145,7 @@ describe('Passes Plugin', function () {
         });
 
         it('get() - should get a pass from data store', function (done) {
-            service.get(passes[0].id).then(function (resp) {
+            service.get(mockObj.id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -152,7 +155,7 @@ describe('Passes Plugin', function () {
         });
 
         it('remove() - should remove a pass from data store', function (done) {
-            service.remove(passes[0].id).then(function (resp) {
+            service.remove(mockObj.id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -161,79 +164,81 @@ describe('Passes Plugin', function () {
             });
         });
 
-        describe('Rejections/Errors', function () {
-            it('save() - should reject', function () {
-                service.save({}).then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
+        it('save() - should reject', function () {
+            service.save({}).then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
             });
+        });
 
-            it('get() - should reject', function () {
-                service.get('unknown').then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
+        it('get() - should reject', function () {
+            service.get('unknown').then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
             });
-            it('remove() - should reject', function () {
-                service.remove().then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
-            });
+        });
 
-            xit('remove() - throw error', function () {
-                assert.throws(function () {
-                    service.remove(null);
-                }, Error);
+        it('remove() - should reject', function () {
+            service.remove('unknown').then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
             });
+        });
+
+        it('remove() - throw error', function () {
+            assert.throws(function () {
+                service.remove(null);
+            }, Error);
         });
 
     });
 
-
-        describe('Passes Router', function () {
+        describe('Router', function () {
 
             it('GET - /passes - should return 200', function (done) {
                 request(app)
                     .get('/passes')
+                    .set('Content-Type', 'application/json')
                     .expect(200, done);
             });
 
             it('POST - /passes - should return 201', function (done) {
-              delete mockObj.id;
                 request(app)
                     .post('/passes')
+                    .set('Content-Type', 'application/json')
                     .send(mockObj)
                     .expect(201, done);
             });
 
             it('GET - /passes/:id - should return 200', function (done) {
                 request(app)
-                    .get('/passes/' + passes[1].id)
+                    .get('/passes/' + mockObj.id)
+                    .set('Content-Type', 'application/json')
                     .expect(200, done);
             });
 
             it('PUT - /passes/:id - should return 200', function (done) {
 
                 request(app)
-                    .put('/passes/' + passes[1].id)
-                    .send(passes[0])
+                    .put('/passes/' + mockObj.id)
+                    .set('Content-Type', 'application/json')
+                    .send(mockObj)
                     .expect(200, done);
             });
 
             it('DELETE - /passes/:id - should return 200', function (done) {
                 request(app)
-                    .delete('/passes/' + passes[1].id)
+                    .delete('/passes/' + mockObj.id)
+                    .set('Content-Type', 'application/json')
                     .expect(200, done);
             });
         });

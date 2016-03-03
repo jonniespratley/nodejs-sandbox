@@ -7,7 +7,6 @@ let log = null;
 
 export default class DB {
     db:any;
-
     constructor(dbName:string) {
         this.db = new Store(dbName, {
             pretty: true

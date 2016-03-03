@@ -14,80 +14,79 @@ const Service = require('./service').default;
 let service;
 export default class PassesController {
 
-  //service:Service;
-  model: Model;
-  collection: any;
+    //service:Service;
+    model:Model;
+    collection:any;
 
-  constructor(options: any) {
-    console.log('PassesController Constructor');
-    service = new Service();
-  }
-
-  use(req, res, next) {
-    console.log('Passes.use', req.method, req.url);
-    next();
-  }
-
-  all(req, res, next) {
-    if (req.params.id) {
-      req.id = req.params.id;
-      console.log('Got id', req.id);
+    constructor(options:any) {
+        console.log('PassesController Constructor');
+        service = new Service();
     }
-    console.log('PassesController-controller.all', req.method, req.url);
-    next();
-  }
 
-  index(req, res, next) {
-    next();
-  }
-
-  get_route(req, res, next) {
-    if (req.id) {
-      service.get(req.id).then((resp) => {
-        res.status(200).send(resp);
-      }).catch((err) => {
-        res.status(404).send(err);
-      });
-    } else {
-      service.find(req.params).then((resp) => {
-        res.status(200).send(resp);
-      }).catch((err) => {
-        res.status(404).send(err);
-      });
+    use(req, res, next) {
+        console.log('Passes.use', req.method, req.url, req.params);
+        next();
     }
-  }
 
-  post_route(req, res, next) {
-    let m = new Model(req.body);
-    console.log('creating', m);
+    all(req, res, next) {
+        if (req.params.id) {
+            req.id = req.params.id;
+            console.log('Got id', req.id);
+        }
+        console.log('PassesController-controller.all', req.method, req.url);
+        next();
+    }
 
-    service.save(m).then((resp) => {
-      res.status(201).send(resp);
-    }).catch((err) => {
-      res.status(404).send(err);
-    })
-  }
+    index(req, res, next) {
+        next();
+    }
 
-  put_route(req, res, next) {
-    assert(req.params.id, 'has id');
-    var model = new Model(req.body);
-    model.id = req.params.id;
+    get_route(req, res, next) {
+        if (req.id) {
+            service.get(req.id).then((resp) => {
+                res.status(200).send(resp);
+            }).catch((err) => {
+                res.status(404).send(err);
+            });
+        } else {
+            service.find(req.params).then((resp) => {
+                res.status(200).send(resp);
+            }).catch((err) => {
+                res.status(404).send(err);
+            });
+        }
+    }
 
-    console.log('updating', req.params.id);
-    service.save(model, (err, resp) => {
-      res.status(200).send(resp);
-    }).catch((err) => {
-      res.status(404).send(err);
-    });
-  }
+    post_route(req, res, next) {
+        let m = new Model(req.body);
+        console.log('creating', m);
 
-  delete_route(req, res, next) {
-    assert(req.params.id, 'has id');
-    console.log('removing', req.params.id);
-    service.remove(req.params.id, (err, resp) => {
-      res.status(200).send(resp);
-    }).catch((err) => {
-      res.status(404).send(err);
-    });
-  }
+        service.save(m).then((resp) => {
+            res.status(201).send(resp);
+        }).catch((err) => {
+            res.status(404).send(err);
+        })
+    }
+
+    put_route(req, res, next) {
+        var model = new Model(req.body);
+        console.log('updating', req.params.id);
+
+        service.save(model).then((resp) => {
+            res.status(200).send(resp);
+        }).catch((err) => {
+            res.status(404).send(err);
+        });
+    }
+
+    delete_route(req, res, next) {
+        assert(req.params.id, 'has id');
+        console.log('removing', req.params.id);
+
+        service.remove(req.params.id).then((resp) => {
+            res.status(200).send(resp);
+        }).catch((err) => {
+            res.status(404).send(err);
+        });
+    }
 }

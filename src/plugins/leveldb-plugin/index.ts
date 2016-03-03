@@ -1,6 +1,6 @@
 'use strict';
-const level = require('level');
-const sublevel = require('level-sublevel');
+const levelup = require('levelup');
+//const sublevel = require('level-sublevel');
 const Logger = require('../logger').default;
 
 export default function DB(dbName) {
@@ -8,11 +8,9 @@ export default function DB(dbName) {
         dbName = 'db';
     }
     var log = new Logger('db-plugin').getLogger(dbName);
-    var db = sublevel(
-        level(dbName, {
-            valueEncoding: 'json'
-        })
-    );
+    var db =   levelup(dbName, {
+          valueEncoding: 'json'
+      });
 
     return db;
 };

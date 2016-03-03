@@ -8,6 +8,8 @@ let users = [
     {id: 2, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00}
 ];
 
+
+
 /**
  * TODO - Describe what your controller does.
  *

@@ -9,7 +9,6 @@ const _ = require('lodash');
  */
 export default class Model {
     id:string;
-
     constructor(obj:any) {
         _.assign(this, obj);
         this.id = obj.id || _.uniqueId('model-');

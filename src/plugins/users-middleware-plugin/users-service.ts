@@ -10,7 +10,6 @@ let users = [
     {id: 2, name: 'sandals', description: 'Walk in comfort with these sandals', price: 10.00}
 ];
 
-
 /**
  * @class         Users
  * @module        Users

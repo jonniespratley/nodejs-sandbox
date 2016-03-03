@@ -13,7 +13,7 @@ asyncModule.initialize = function (callback) {
     setTimeout(function () {
         asyncModule.initialized = true;
         callback();
-    }, 1000);
+    }, 400);
 };
 
 asyncModule.tellMeSomething = function (callback) {

@@ -11,7 +11,6 @@ const UserModel = require(path.resolve(__dirname, './user-model')).default;
 const UsersService = require(path.resolve(__dirname, './users-service')).default;
 var service = null;
 var instance = null;
-
 var app = express();
 
 
