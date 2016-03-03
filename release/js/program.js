@@ -1,0 +1,56 @@
+'use strict';
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var App = require('./app').default;
+var Logger = require('./plugins/logger').default;
+var DiContainer = require('./plugins/di-container').default;
+/**
+ * Program class provides the glue for the main application.
+ */
+var Program = (function (_super) {
+    __extends(Program, _super);
+    function Program(options) {
+        _super.call(this, 'program', options);
+        this.initialized = false;
+        this.plugins = {};
+        options = options || {
+            namespace: 'nodejs-sandbox',
+            dbName: 'data'
+        };
+        this.options = options;
+        this.namespace = options.namespace;
+        this.dbName = options.dbName;
+        this.logger = new Logger(options.namespace).getLogger('Program');
+        this.app = new App(options);
+        _super.prototype.register.call(this, 'app', this.app);
+        _super.prototype.register.call(this, 'namespace', this.namespace);
+        _super.prototype.register.call(this, 'dbName', this.dbName);
+        _super.prototype.register.call(this, 'program', this);
+        _super.prototype.plugin.call(this, 'Logger', require('./plugins/logger').default);
+        _super.prototype.plugin.call(this, 'db', require('./plugins/db-plugin').default);
+        this.logger('constructor', options);
+        if (options.run) {
+            this.run(options.run);
+        }
+    }
+    Program.prototype.run = function (cb) {
+        this.initialized = true;
+        this.logger('run');
+        if (cb) {
+            cb(this);
+        }
+    };
+    Program.prototype.use = function (plugin) {
+        this.logger('use', plugin.name, plugin);
+        this.plugins[plugin.name] = plugin;
+        _super.prototype.inject.call(this, plugin);
+        return this;
+    };
+    return Program;
+})(DiContainer);
+exports["default"] = Program;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9wcm9ncmFtLnRzIl0sIm5hbWVzIjpbIlByb2dyYW0iLCJQcm9ncmFtLmNvbnN0cnVjdG9yIiwiUHJvZ3JhbS5ydW4iLCJQcm9ncmFtLnVzZSJdLCJtYXBwaW5ncyI6IkFBQUEsWUFBWSxDQUFDOzs7Ozs7QUFDYixJQUFNLEdBQUcsR0FBRyxPQUFPLENBQUMsT0FBTyxDQUFDLENBQUMsT0FBTyxDQUFDO0FBQ3JDLElBQU0sTUFBTSxHQUFHLE9BQU8sQ0FBQyxrQkFBa0IsQ0FBQyxDQUFDLE9BQU8sQ0FBQztBQUNuRCxJQUFNLFdBQVcsR0FBRyxPQUFPLENBQUMsd0JBQXdCLENBQUMsQ0FBQyxPQUFPLENBQUM7QUFDOUQ7O0dBRUc7QUFDSDtJQUFxQ0EsMkJBQVdBO0lBTzVDQSxpQkFBWUEsT0FBV0E7UUFDbkJDLGtCQUFNQSxTQUFTQSxFQUFFQSxPQUFPQSxDQUFDQSxDQUFDQTtRQUMxQkEsSUFBSUEsQ0FBQ0EsV0FBV0EsR0FBR0EsS0FBS0EsQ0FBQ0E7UUFDekJBLElBQUlBLENBQUNBLE9BQU9BLEdBQUdBLEVBQUVBLENBQUNBO1FBR2xCQSxPQUFPQSxHQUFHQSxPQUFPQSxJQUFJQTtZQUNiQSxTQUFTQSxFQUFFQSxnQkFBZ0JBO1lBQzNCQSxNQUFNQSxFQUFFQSxNQUFNQTtTQUNqQkEsQ0FBQ0E7UUFDTkEsSUFBSUEsQ0FBQ0EsT0FBT0EsR0FBR0EsT0FBT0EsQ0FBQ0E7UUFDdkJBLElBQUlBLENBQUNBLFNBQVNBLEdBQUdBLE9BQU9BLENBQUNBLFNBQVNBLENBQUNBO1FBQ25DQSxJQUFJQSxDQUFDQSxNQUFNQSxHQUFHQSxPQUFPQSxDQUFDQSxNQUFNQSxDQUFDQTtRQUM3QkEsSUFBSUEsQ0FBQ0EsTUFBTUEsR0FBR0EsSUFBSUEsTUFBTUEsQ0FBQ0EsT0FBT0EsQ0FBQ0EsU0FBU0EsQ0FBQ0EsQ0FBQ0EsU0FBU0EsQ0FBQ0EsU0FBU0EsQ0FBQ0EsQ0FBQ0E7UUFFakVBLElBQUlBLENBQUNBLEdBQUdBLEdBQUdBLElBQUlBLEdBQUdBLENBQUNBLE9BQU9BLENBQUNBLENBQUNBO1FBQzVCQSxnQkFBS0EsQ0FBQ0EsUUFBUUEsWUFBQ0EsS0FBS0EsRUFBRUEsSUFBSUEsQ0FBQ0EsR0FBR0EsQ0FBQ0EsQ0FBQ0E7UUFDaENBLGdCQUFLQSxDQUFDQSxRQUFRQSxZQUFDQSxXQUFXQSxFQUFFQSxJQUFJQSxDQUFDQSxTQUFTQSxDQUFDQSxDQUFDQTtRQUM1Q0EsZ0JBQUtBLENBQUNBLFFBQVFBLFlBQUNBLFFBQVFBLEVBQUVBLElBQUlBLENBQUNBLE1BQU1BLENBQUNBLENBQUNBO1FBQ3RDQSxnQkFBS0EsQ0FBQ0EsUUFBUUEsWUFBQ0EsU0FBU0EsRUFBRUEsSUFBSUEsQ0FBQ0EsQ0FBQ0E7UUFFaENBLGdCQUFLQSxDQUFDQSxNQUFNQSxZQUFDQSxRQUFRQSxFQUFFQSxPQUFPQSxDQUFDQSxrQkFBa0JBLENBQUNBLENBQUNBLE9BQU9BLENBQUNBLENBQUNBO1FBQzVEQSxnQkFBS0EsQ0FBQ0EsTUFBTUEsWUFBQ0EsSUFBSUEsRUFBRUEsT0FBT0EsQ0FBQ0EscUJBQXFCQSxDQUFDQSxDQUFDQSxPQUFPQSxDQUFDQSxDQUFDQTtRQUUzREEsSUFBSUEsQ0FBQ0EsTUFBTUEsQ0FBQ0EsYUFBYUEsRUFBRUEsT0FBT0EsQ0FBQ0EsQ0FBQ0E7UUFDcENBLEVBQUVBLENBQUNBLENBQUNBLE9BQU9BLENBQUNBLEdBQUdBLENBQUNBLENBQUNBLENBQUNBO1lBQ2RBLElBQUlBLENBQUNBLEdBQUdBLENBQUNBLE9BQU9BLENBQUNBLEdBQUdBLENBQUNBLENBQUNBO1FBQzFCQSxDQUFDQTtJQUNMQSxDQUFDQTtJQUVERCxxQkFBR0EsR0FBSEEsVUFBSUEsRUFBRUE7UUFDRkUsSUFBSUEsQ0FBQ0EsV0FBV0EsR0FBR0EsSUFBSUEsQ0FBQ0E7UUFDeEJBLElBQUlBLENBQUNBLE1BQU1BLENBQUNBLEtBQUtBLENBQUNBLENBQUNBO1FBQ25CQSxFQUFFQSxDQUFDQSxDQUFDQSxFQUFFQSxDQUFDQSxDQUFDQSxDQUFDQTtZQUNMQSxFQUFFQSxDQUFDQSxJQUFJQSxDQUFDQSxDQUFDQTtRQUNiQSxDQUFDQTtJQUNMQSxDQUFDQTtJQUVERixxQkFBR0EsR0FBSEEsVUFBSUEsTUFBTUE7UUFDTkcsSUFBSUEsQ0FBQ0EsTUFBTUEsQ0FBQ0EsS0FBS0EsRUFBRUEsTUFBTUEsQ0FBQ0EsSUFBSUEsRUFBRUEsTUFBTUEsQ0FBQ0EsQ0FBQ0E7UUFDeENBLElBQUlBLENBQUNBLE9BQU9BLENBQUNBLE1BQU1BLENBQUNBLElBQUlBLENBQUNBLEdBQUdBLE1BQU1BLENBQUNBO1FBQ25DQSxnQkFBS0EsQ0FBQ0EsTUFBTUEsWUFBQ0EsTUFBTUEsQ0FBQ0EsQ0FBQ0E7UUFDckJBLE1BQU1BLENBQUNBLElBQUlBLENBQUNBO0lBQ2hCQSxDQUFDQTtJQUNMSCxjQUFDQTtBQUFEQSxDQW5EQSxBQW1EQ0EsRUFuRG9DLFdBQVcsRUFtRC9DO0FBbkRELDRCQW1EQyxDQUFBIiwiZmlsZSI6InByb2dyYW0uanMiLCJzb3VyY2VzQ29udGVudCI6W251bGxdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==

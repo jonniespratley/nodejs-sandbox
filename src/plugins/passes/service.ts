@@ -5,6 +5,8 @@ const path = require('path');
 const Store = require('jfs');
 const Model = require('./model').default;
 
+const Logger = require('../logger').default;
+const log = new Logger('passes-plugin').getLogger('service');
 
 /**
  * @class         Users
@@ -24,20 +26,20 @@ export default class Service {
 			} else {
 				//this.users = db.sublevel('users');
         this.db = new Store('data', {
-           // type: 'single',
-          //  saveId: '_id',
+            //type: 'single',
+            saveId: '_id',
             pretty: true
         });
 			}
-      console.log('Service Constructor');
+      log('Service Constructor');
     }
 
     get(id:any) {
         let self = this;
         return new Promise((resolve, reject)=> {
-            console.log('get', id);
+            log('get', id);
             this.db.get(id, (err, resp)=> {
-                console.log('get', err, resp);
+                log('get', err, resp);
                 if (err) {
                     reject(err);
                 }
@@ -46,14 +48,16 @@ export default class Service {
         });
     }
 
-    remove(id:any) {
-        if(!id){
-            throw new Erorr('Must provide id!');
-        }
+    remove(id:string) {
+      if(!id){
+        throw new Error('Must provide id!');
+        //reject('Must provide an id!');
+      }
         return new Promise((resolve, reject)=> {
-            console.log('remove', id);
+            log('remove', id);
             this.db.delete(id, (err, resp)=> {
-                console.log('remove', err, resp);
+              resp = resp || id;
+                log('remove', 'response', resp);
                 if (err) {
                     reject(err);
                 }
@@ -64,40 +68,44 @@ export default class Service {
 
     save(obj:any) {
         return new Promise((resolve, reject)=> {
-            console.log('save', obj);
-            this.db.save(obj.id, obj, (err, resp)=> {
-                console.log('save', err, resp);
+            log('save', obj);
+            this.db.save(obj.id || null,  obj, (err, resp)=> {
+                log('save', err, resp);
                 if (err) {
                     reject(err);
                 }
-                resolve(resp);
+                resolve(obj);
             });
         });
     }
 
     find(params:any) {
         return new Promise((resolve, reject)=> {
-            let _docs = [];
-            console.log('find', params);
+            let _docs = [], _resp;
+            log('find', params);
             this.db.all((err, resp)=> {
                 if (err) {
                     reject(err);
                 }
 
-                console.log('find', 'response', resp);
+                log('find', 'response', resp);
                 _.forIn(resp, (value, key) => {
-                    console.log(key);
-                    console.log('find', params, value);
+                    log(key);
+                    log('find', params, value);
                     _docs.push(value);
                 });
-                resolve(_.filter(_docs, params));
+                if(params){
+                   _resp =  _.filter(_docs, params);
+                } else {
+                    _resp = _docs;
+                }
+                resolve(_docs);
 
             });
         });
     }
 
-
     static method2() {
-        console.log('method2');
+        log('method2');
     }
 }

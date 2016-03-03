@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-
     "sourceRoot": "src/",
     "target": "ES6",
     "module": "commonjs",
@@ -11,7 +10,9 @@
     "sourceMap": true
   },
   "exclude": [
+    "plop-templates",
     "node_modules",
+    "typings",
     "wwwroot"
   ]
 }

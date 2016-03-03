@@ -1,5 +1,6 @@
 "use strict";
 const assert = require('assert');
+const async = require('async');
 const path = require('path');
 const fs = require('fs-extra');
 const express = require('express');
@@ -13,13 +14,19 @@ const Service = require(path.resolve(__dirname, './service')).default;
 let service = null;
 let instance = null;
 let app = express();
-
 let mockObj = {
     id: 'test-1'
 };
 
+let passes = null;
+let testId = '';
+let testUser = new Model({
+    id: 'test-user-00',
+    name: 'user',
+    type: 'user'
+});
 
-describe('{{pascalCase name}} Plugin', function () {
+describe('Passes Plugin', function () {
 
     it('should be defined', function (done) {
         assert(Plugin);
@@ -32,57 +39,13 @@ describe('{{pascalCase name}} Plugin', function () {
         done();
     });
 
-    xit('should have model, controller, service instances', function (done) {
-        assert(instance.Controller);
-        assert(instance.Model);
-        assert(instance.Service);
-        done();
-    });
-
     it('should mount to express app', function (done) {
         new Router(app);
         done();
     });
 
-    describe('{{pascalCase name}} Router', function () {
-
-
-        it('GET - /{{route}} - should return 200', function (done) {
-            request(app)
-                .get('/{{route}}')
-                .expect(200, done);
-        });
-
-        it('POST - /{{route}} - should return 201', function (done) {
-            request(app)
-                .post('/{{route}}')
-                .send(mockObj)
-                .expect(201, done);
-        });
-
-        it('GET - /{{route}}/:id - should return 200', function (done) {
-            request(app)
-                .get('/{{route}}/' + mockObj.id)
-                .expect(200, done);
-        });
-
-        it('PUT - /{{route}}/:id - should return 200', function (done) {
-            objObj.name = 'updated at' + Date.now();
-            request(app)
-                .put('/{{route}}/' + mockObj.id)
-                .send(mockObj)
-                .expect(200, done);
-        });
-
-        it('DELETE - /{{route}}/:id - should return 200', function (done) {
-            request(app)
-                .delete('/{{route}}/' + mockObj.id)
-                .expect(200, done);
-        });
-    });
-
     describe('Controller', function () {
-        //
+
     });
 
     describe('Model', function () {
@@ -102,34 +65,30 @@ describe('{{pascalCase name}} Plugin', function () {
     });
 
     describe('Service', function () {
-        let passes = null;
-        let testId = '';
-        let testUser = new Model({
-            id: 'test-pass-00',
-            name: 'test',
-            type: 'test'
-        });
 
         before(function (done) {
             service = new Service();
             let m = null
             let createModel = function (id, callback) {
-               m = new Model({
-                   id: 'test-pass-'+ id,
-                   name: 'test ' + id,
-                   type: 'test'
-               });
+                m = new Model({
+                    id: 'test-pass-' + id,
+                    name: 'pass ' + id,
+                    type: 'test'
+                });
                 service.save(m).then(function (resp) {
                     callback(null, resp);
                 });
             };
+
             async.times(5, function (n, next) {
                 createModel(n, function (err, resp) {
                     next(err, resp)
                 });
             }, function (err, _passes) {
+                console.log('================================= BEFORE =================');
                 console.log('created', _passes);
                 passes = _passes
+                mockObj = _passes[1];
                 done();
             });
         });
@@ -139,7 +98,9 @@ describe('{{pascalCase name}} Plugin', function () {
         });
 
         it('find() - should get all passes from data store', function (done) {
-            service.find({type: 'test'}).then(function (resp) {
+            service.find({
+                type: 'test'
+            }).then(function (resp) {
                 assert(resp);
                 assert(resp.length);
                 done();
@@ -150,7 +111,7 @@ describe('{{pascalCase name}} Plugin', function () {
         });
 
         it('save() - should save a pass to data store', function (done) {
-            service.save(testUser).then(function (resp) {
+            service.save(mockObj).then(function (resp) {
                 console.log(resp);
                 assert(resp);
                 done();
@@ -162,7 +123,7 @@ describe('{{pascalCase name}} Plugin', function () {
 
         it('save() should update a pass in data store', function (done) {
             service.save({
-                id: 'pass-test',
+                id: 'test-1',
                 email: 'updated@gmail.com'
             }).then(function (resp) {
                 console.log(resp);
@@ -175,8 +136,7 @@ describe('{{pascalCase name}} Plugin', function () {
         });
 
         it('get() - should get a pass from data store', function (done) {
-            assert(testId)
-            service.get(testId).then(function (resp) {
+            service.get(mockObj.id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -186,8 +146,7 @@ describe('{{pascalCase name}} Plugin', function () {
         });
 
         it('remove() - should remove a pass from data store', function (done) {
-            assert(testId)
-            service.remove(testId).then(function (resp) {
+            service.remove(mockObj.id).then(function (resp) {
                 assert(resp);
                 done();
             }).catch(function (err) {
@@ -196,45 +155,83 @@ describe('{{pascalCase name}} Plugin', function () {
             });
         });
 
-        describe('Rejections/Errors', function () {
-            it('save() - should reject', function () {
-                service.save({}).then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
-            });
-
-            it('get() - should reject', function () {
-                service.get('unknown').then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
-            });
-            it('remove() - should reject', function () {
-                service.remove('unknown').then(function (resp) {
-                    assert.fail(resp);
-                    done();
-                }).catch(function (err) {
-                    assert(err);
-                    done();
-                });
-            });
-
-            it('remove() - throw error', function () {
-                assert.throws(function () {
-                    service.remove(null);
-                }, Error);
+        it('save() - should reject', function () {
+            service.save({}).then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
             });
         });
 
+        it('get() - should reject', function () {
+            service.get('unknown').then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
+            });
+        });
 
+        it('remove() - should reject', function () {
+            service.remove('unknown').then(function (resp) {
+                assert.fail(resp);
+                done();
+            }).catch(function (err) {
+                assert(err);
+                done();
+            });
+        });
 
+        it('remove() - throw error', function () {
+            assert.throws(function () {
+                service.remove(null);
+            }, Error);
+        });
+
+    });
+
+    describe('Router', function () {
+
+        it('GET - /passes - should return 200', function (done) {
+            request(app)
+                .get('/passes')
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
+        });
+
+        it('POST - /passes - should return 201', function (done) {
+            request(app)
+                .post('/passes')
+                .set('Content-Type', 'application/json')
+                .send(mockObj)
+                .expect(201, done);
+        });
+
+        it('GET - /passes/:id - should return 200', function (done) {
+            request(app)
+                .get('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
+        });
+
+        it('PUT - /passes/:id - should return 200', function (done) {
+
+            request(app)
+                .put('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .send(mockObj)
+                .expect(200, done);
+        });
+
+        it('DELETE - /passes/:id - should return 200', function (done) {
+            request(app)
+                .delete('/passes/' + mockObj.id)
+                .set('Content-Type', 'application/json')
+                .expect(200, done);
+        });
     });
 
 

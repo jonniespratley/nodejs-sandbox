@@ -1,36 +1,47 @@
 const modulePath = "app/modules/{{camelCase name}}.js";
 const SRC_PATH = 'src/';
 
-module.exports = function (plop) {
-	plop.addHelper("upperCase", function (text) {
+module.exports = function(plop) {
+	plop.addHelper("upperCase", function(text) {
 		return text.toUpperCase();
 	});
 
 	plop.setGenerator("plugin", {
 		description: "Create a new NodeJS Plugin",
 		prompts: [{
-			type: "input",
-			name: "name",
-			message: "What is your plugin name?"
-		},
+				type: "input",
+				name: "name",
+				message: "What is your plugin name?"
+			},
+
+			{
+				type: 'confirm',
+				name: 'wantModel',
+				message: 'Do you want a Model?'
+			},
+
 			{
 				type: 'confirm',
 				name: 'wantController',
 				message: 'Do you want a Controller?'
-			},
-			{
+			}, {
 				type: 'confirm',
 				name: 'wantService',
 				message: 'Do you want a Service?'
-			},
-			{
+			}, {
 				type: 'confirm',
 				name: 'wantRouter',
 				message: 'Do you want a Router?'
+			},
+
+			{
+				type: "input",
+				name: "route",
+				message: "What is your route name? (my route = /my/route)"
 			}
 		],
-		actions: function (answers) {
-			var actions = [	//Index
+		actions: function(answers) {
+			var actions = [ //Index
 				{
 					type: "add",
 					path: SRC_PATH + "/plugins/{{dashCase name}}/index.ts",
@@ -41,29 +52,40 @@ module.exports = function (plop) {
 			if (answers.wantService) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-service.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/service.ts",
 					templateFile: "plop-templates/nodejs-plugin-service.ts"
 				});
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-service-spec.ts",
-					templateFile: "plop-templates/nodejs-plugin-service-spec.ts"
+					path: SRC_PATH + "/plugins/{{dashCase name}}/index-spec.ts",
+					templateFile: "plop-templates/nodejs-plugin-spec.ts"
 				});
 			}
+
 			if (answers.wantRouter) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-router.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/router.ts",
 					templateFile: "plop-templates/nodejs-plugin-router.ts"
 				});
 			}
+
+			if (answers.wantModel) {
+				actions.push({
+					type: "add",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/model.ts",
+					templateFile: "plop-templates/nodejs-plugin-model.ts"
+				});
+			}
+
 			if (answers.wantController) {
 				actions.push({
 					type: "add",
-					path: SRC_PATH + "/plugins/{{dashCase name}}/{{dashCase name}}-controller.ts",
+					path: SRC_PATH + "/plugins/{{dashCase name}}/controller.ts",
 					templateFile: "plop-templates/nodejs-plugin-controller.ts"
 				});
 			}
+
 			return actions;
 		}
 	});
@@ -107,28 +129,25 @@ module.exports = function (plop) {
 	});
 
 	plop.setGenerator("model", {
-		actions: [
-			{
-				type: "add",
-				path: "src/modules/{{camelCase name}}.model.js",
-				templateFile: "plop-templates/model.js"
-			}, {
-				type: "add",
-				path: "test/{{camelCase name}}.model.tests.js",
-				templateFile: "plop-templates/model.tests.js"
-			},
-			{
-				type: "modify",
-				path: modulePath,
-				pattern: /(\/\/ IMPORT MODULE FILES)/g,
-				template: "$1\nimport Model from \"./{{camelCase name}}.model\";"
-			}, {
-				type: "modify",
-				path: modulePath,
-				pattern: /(const namespace = "\w+";)/g,
-				template: "$1\n\nModel = Model.extend( { namespace: namespace } );"
-			}
-		]
+		actions: [{
+			type: "add",
+			path: "src/modules/{{camelCase name}}.model.js",
+			templateFile: "plop-templates/model.js"
+		}, {
+			type: "add",
+			path: "test/{{camelCase name}}.model.tests.js",
+			templateFile: "plop-templates/model.tests.js"
+		}, {
+			type: "modify",
+			path: modulePath,
+			pattern: /(\/\/ IMPORT MODULE FILES)/g,
+			template: "$1\nimport Model from \"./{{camelCase name}}.model\";"
+		}, {
+			type: "modify",
+			path: modulePath,
+			pattern: /(const namespace = "\w+";)/g,
+			template: "$1\n\nModel = Model.extend( { namespace: namespace } );"
+		}]
 
 	});
 

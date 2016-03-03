@@ -19,7 +19,7 @@ describe('auth-plugin', function () {
         assert(plugin);
     });
 
-    xit('GET - /login - should return 200', function (done) {
+    it('GET - /login - should return 200', function (done) {
         request(app)
             .get('/login')
             .expect('Content-Type', /json/)
