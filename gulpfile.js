@@ -6,7 +6,7 @@ const ts = require('gulp-typescript');
 const merge = require('merge2');
 const concat = require('gulp-concat');
 const rimraf = require('gulp-rimraf');
-const watch = require('gulp-watch');
+
 const sourcemaps = require('gulp-sourcemaps');
 const $ = require('gulp-load-plugins')({
   lazy: true
@@ -21,8 +21,8 @@ const config = {
     'src/**/*.ts',
   ],
   jsSrc: [
-    //'src/**/*.js',
-    'release/**/*.js'
+    '!release/**/*-spec.js',
+    'release/**/*.js',
   ],
   specs: [
     //'src/**/*-spec.js',
@@ -89,16 +89,19 @@ gulp.task('typescript', function() {
 
 
 
-gulp.task('watch-test', function() {
+gulp.task('watch-coverage', ['pre-test'], function() {
   return gulp.src(config.specs)
-    .pipe(mocha());
+    .pipe(mocha({
+      read: false
+    }))
+    .pipe(istanbul.writeReports());
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['watch-test'], function() {
   return gulp.watch(config.tsSrc, ['typescript']);
 });
 gulp.task('watch-test', function() {
-  return gulp.watch(config.specs, ['mocha']);
+  return gulp.watch(config.specs, ['watch-coverage']);
 });
 
 
@@ -153,4 +156,4 @@ gulp.task('test', ['pre-test'], function() {
 });
 
 gulp.task('compile', ['clean', 'typescript']);
-gulp.task('default', ['test']);
+gulp.task('default', ['compile', 'test']);

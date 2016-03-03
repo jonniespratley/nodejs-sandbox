@@ -1,17 +1,16 @@
 'use strict';
-module.exports = function() {
-  var dependencies = {};
-  var factories = {};
-  var serviceLocator = {};
+var dependencies = {};
+var factories = {};
+var serviceLocator = {};
+export default class ServiceLocator{
 
-  serviceLocator.factory = function(name, factory) { //[1]
+  static factory(name, factory) { //[1]
     factories[name] = factory;
-  };
-
-  serviceLocator.register = function(name, instance) { //[2]
+  }
+  static register(name, instance) { //[2]
     dependencies[name] = instance;
-  };
-  serviceLocator.get = function(name) { //[3]
+  }
+  static get(name) { //[3]
     if (!dependencies[name]) {
       var factory = factories[name];
       dependencies[name] = factory && factory(serviceLocator);
@@ -20,7 +19,5 @@ module.exports = function() {
       }
     }
     return dependencies[name];
-  };
-
-  return serviceLocator;
-};
+  }
+}

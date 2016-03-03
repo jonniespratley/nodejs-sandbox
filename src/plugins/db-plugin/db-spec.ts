@@ -4,7 +4,6 @@ const assert = require('assert');
 const DB = require('./').default;
 var db = null;
 
-
 describe('db-plugin', function () {
 
     before(function (done) {
@@ -39,9 +38,6 @@ describe('db-plugin', function () {
         db.put('test-doc', {name: 'db-plugin'}).then(function (resp) {
             assert(resp);
             done();
-        }).catch(function (err) {
-            assert.fail(err);
-            done();
         });
     });
 
@@ -50,18 +46,12 @@ describe('db-plugin', function () {
         db.get('test-doc').then(function (resp) {
             assert(resp);
             done();
-        }).catch(function (err) {
-            assert.fail(err);
-            done();
         });
     });
 
     it('find(params) - should return array', function (done) {
-        db.find().then(function (resp) {
+        db.find({}).then(function (resp) {
             assert(resp);
-            done();
-        }).catch(function (err) {
-            assert.fail(err);
             done();
         });
     });

@@ -14,7 +14,6 @@ const Service = require(path.resolve(__dirname, './service')).default;
 let service = null;
 let instance = null;
 let app = express();
-
 let mockObj = {
     id: 'test-1'
 };
