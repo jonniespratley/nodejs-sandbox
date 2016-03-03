@@ -30,6 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "args-list": "^0.3.3",
+    "async": "^1.5.2",
     "body-parser": "^1.14.2",
     "connect-flash": "^0.1.1",
     "debug": "^2.2.0",
