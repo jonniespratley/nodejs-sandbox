@@ -13,27 +13,27 @@ module.exports = function(plop) {
 				name: "name",
 				message: "What is your plugin name?"
 			},
+			/*
+						{
+							type: 'confirm',
+							name: 'wantModel',
+							message: 'Do you want a Model?'
+						},
 
-			{
-				type: 'confirm',
-				name: 'wantModel',
-				message: 'Do you want a Model?'
-			},
-
-			{
-				type: 'confirm',
-				name: 'wantController',
-				message: 'Do you want a Controller?'
-			}, {
-				type: 'confirm',
-				name: 'wantService',
-				message: 'Do you want a Service?'
-			}, {
-				type: 'confirm',
-				name: 'wantRouter',
-				message: 'Do you want a Router?'
-			},
-
+						{
+							type: 'confirm',
+							name: 'wantController',
+							message: 'Do you want a Controller?'
+						}, {
+							type: 'confirm',
+							name: 'wantService',
+							message: 'Do you want a Service?'
+						}, {
+							type: 'confirm',
+							name: 'wantRouter',
+							message: 'Do you want a Router?'
+						},
+			*/
 			{
 				type: "input",
 				name: "route",
@@ -48,6 +48,11 @@ module.exports = function(plop) {
 					templateFile: "plop-templates/nodejs-plugin-index.ts"
 				}
 			];
+
+			answers.wantService = true;
+			answers.wantController = true;
+			answers.wantRouter = true;
+			answers.wantModel = true;
 
 			if (answers.wantService) {
 				actions.push({

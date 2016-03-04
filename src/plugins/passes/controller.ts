@@ -3,6 +3,9 @@ const path = require('path');
 const assert = require('assert');
 const Model = require('./model').default;
 const Service = require('./service').default;
+const Logger = require('../logger').default;
+const log = new Logger('passes-plugin').getLogger('controller');
+let service;
 
 /**
  * TODO - Describe what your controller does.
@@ -11,39 +14,61 @@ const Service = require('./service').default;
  * @module        Passes
  * @constructor
  */
-let service;
 export default class PassesController {
 
     //service:Service;
     model:Model;
     collection:any;
 
+    /**
+     *
+     * @param options
+     */
     constructor(options:any) {
-        console.log('PassesController Constructor');
+        log('Constructor');
         service = new Service();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     use(req, res, next) {
-        console.log('Passes.use', req.method, req.url, req.params);
+        log('use', req.method, req.url, req.params);
         next();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     all(req, res, next) {
         if (req.params.id) {
             req.id = req.params.id;
             console.log('Got id', req.id);
         }
-        console.log('PassesController-controller.all', req.method, req.url);
+        log('all', req.method, req.url);
         next();
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     index(req, res, next) {
         next();
     }
 
+
     get_route(req, res, next) {
-        if (req.id) {
-            service.get(req.id).then((resp) => {
+        if (req.params.id) {
+            service.get(req.params.id).then((resp) => {
                 res.status(200).send(resp);
             }).catch((err) => {
                 res.status(404).send(err);
@@ -57,9 +82,15 @@ export default class PassesController {
         }
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     post_route(req, res, next) {
         let m = new Model(req.body);
-        console.log('creating', m);
+        log('creating', m);
 
         service.save(m).then((resp) => {
             res.status(201).send(resp);
@@ -68,9 +99,15 @@ export default class PassesController {
         })
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     put_route(req, res, next) {
         var model = new Model(req.body);
-        console.log('updating', req.params.id);
+        log('updating', req.params.id);
 
         service.save(model).then((resp) => {
             res.status(200).send(resp);
@@ -79,9 +116,15 @@ export default class PassesController {
         });
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     * @param next
+     */
     delete_route(req, res, next) {
         assert(req.params.id, 'has id');
-        console.log('removing', req.params.id);
+        log('removing', req.params.id);
 
         service.remove(req.params.id).then((resp) => {
             res.status(200).send(resp);

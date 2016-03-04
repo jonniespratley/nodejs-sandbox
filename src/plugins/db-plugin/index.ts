@@ -2,6 +2,7 @@
 const _ = require('lodash');
 const Store = require('jfs');
 const Logger = require('../logger').default;
+
 let log = null;
 
 export default class DB {

@@ -2,21 +2,21 @@
 const path = require('path');
 const assert = require('assert');
 const Model = require('./model').default;
-const {{pascalCase name}}Service = require('./service').default;
+const PostsService = require('./service').default;
 const Logger = require('../logger').default;
-const log = new Logger('{{pascalCase name}}').getLogger('controller');
+const log = new Logger('Posts').getLogger('controller');
 let service;
 
 /**
  * TODO - Describe what your controller does.
  *
  * @class
- * @module        {{pascalCase name}}
+ * @module        Posts
  * @constructor
  */
-export default class {{pascalCase name}}Controller {
+export default class PostsController {
 
-    service:{{pascalCase name}}Service;
+    service:PostsService;
     model:Model;
     collection:any;
 
@@ -26,7 +26,7 @@ export default class {{pascalCase name}}Controller {
      */
     constructor(options:any) {
         log('Constructor');
-        service = new {{pascalCase name}}Service();
+        service = new PostsService();
     }
 
     /**
