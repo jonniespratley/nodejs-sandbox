@@ -1,10 +1,8 @@
 'use strict';
 const _ = require('lodash');
 /**
- * TODO - Describe what your model does.
- *
- * @class         Passes
- * @module        Passes
+ * @class         Pass
+ * @module        plugins/passes
  * @constructor
  */
 export default class Model {

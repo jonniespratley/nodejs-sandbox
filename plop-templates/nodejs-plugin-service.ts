@@ -5,31 +5,27 @@ const path = require('path');
 const Store = require('jfs');
 const Model = require('./model').default;
 
-
 /**
- * @class         Users
- * @module        Users
+ * @class         {{pascalCase name}}Router
+ * @module        plugins/{{pascalCase name}}
  * @constructor
  */
 export default class Service {
-    name:string;
-    options:object;
+
+
     models:any;
     model:any;
     db:any;
 
     constructor(db:any) {
-			if(db){
-				this.db = db;
-			} else {
-				//this.users = db.sublevel('users');
-        this.db = new Store('data', {
-           // type: 'single',
-          //  saveId: '_id',
-            pretty: true
-        });
-			}
-      console.log('Service Constructor');
+        if (db) {
+            this.db = db;
+        } else {
+            this.db = new Store('data', {
+                pretty: true
+            });
+        }
+        console.log('Service Constructor');
     }
 
     get(id:any) {
@@ -47,7 +43,7 @@ export default class Service {
     }
 
     remove(id:any) {
-        if(!id){
+        if (!id) {
             throw new Erorr('Must provide id!');
         }
         return new Promise((resolve, reject)=> {
@@ -77,27 +73,29 @@ export default class Service {
 
     find(params:any) {
         return new Promise((resolve, reject)=> {
-            let _docs = [];
-            console.log('find', params);
+            let _docs = [], _resp;
+            log('find', params);
             this.db.all((err, resp)=> {
                 if (err) {
                     reject(err);
                 }
-
-                console.log('find', 'response', resp);
+                log('find', 'response', resp);
                 _.forIn(resp, (value, key) => {
-                    console.log(key);
-                    console.log('find', params, value);
                     _docs.push(value);
                 });
-                resolve(_.filter(_docs, params));
+                if (params) {
+                    //params.doctype = 'device';
+                    log('find', 'filter', params);
+
+                    resolve(_.filter(_docs, params));
+                } else {
+                    resolve(_docs);
+                }
+
 
             });
         });
     }
 
 
-    static method2() {
-        console.log('method2');
-    }
 }

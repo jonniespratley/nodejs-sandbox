@@ -9,8 +9,8 @@ const Logger = require('../logger').default;
 const log = new Logger('passes-plugin').getLogger('service');
 
 /**
- * @class         Users
- * @module        Users
+ * @class         PassService
+ * @module        plugins/passes
  * @constructor
  */
 export default class Service {

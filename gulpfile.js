@@ -98,16 +98,11 @@ gulp.task('watch-coverage', ['pre-test'], function() {
     .pipe(istanbul.writeReports());
 });
 
-gulp.task('watch-compile', function() {
-  return gulp.watch(config.tsSrc, ['typescript']);
-});
-gulp.task('watch', ['watch-test'], function() {
-  return gulp.watch(config.tsSrc, ['typescript']);
+gulp.task('watch', function() {
+  gulp.watch(config.tsSrc, ['typescript']);
+  gulp.watch(config.specs, ['watch-coverage']);
 });
 
-gulp.task('watch-test', function() {
-  return gulp.watch(config.specs, ['watch-coverage']);
-});
 
 
 gulp.task('mocha', function() {
@@ -138,10 +133,10 @@ gulp.task('coveralls', function() {
     .pipe(coveralls());
 });
 
-gulp.task('pre-test', ['typescript'], function() {
+gulp.task('pre-test', function() {
   return gulp.src(config.jsSrc)
     .pipe(istanbul({
-      includeUntested: true,
+      includeUntested: true
     }))
     .pipe(istanbul.hookRequire());
 });

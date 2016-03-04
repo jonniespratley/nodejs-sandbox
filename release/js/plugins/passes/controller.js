@@ -4,10 +4,10 @@ var assert = require('assert');
 var Model = require('./model').default;
 var Service = require('./service').default;
 /**
- * TODO - Describe what your controller does.
  *
- * @class         Passes
- * @module        Passes
+ * @class           PassesController
+ * @description     This controller handles the routes from the router.
+ * @module        plugins/passes
  * @constructor
  */
 var service;

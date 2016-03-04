@@ -4,6 +4,8 @@ const Logger = require('./plugins/logger').default;
 const DiContainer = require('./plugins/di-container').default;
 /**
  * Program class provides the glue for the main application.
+ * @class Program
+ *
  */
 export default class Program extends DiContainer {
     modules:any;
@@ -16,7 +18,6 @@ export default class Program extends DiContainer {
         super('program', options);
         this.initialized = false;
         this.plugins = {};
-
 
         options = options || {
                 namespace: 'nodejs-sandbox',
@@ -42,14 +43,25 @@ export default class Program extends DiContainer {
         }
     }
 
-    run(cb) {
+    /**
+     * This method initializes the program and invokes the callback when complete.
+     * @function
+     * @param {Function} callback The callback function to invoke.
+     */
+    run(callback) {
         this.initialized = true;
         this.logger('run');
-        if (cb) {
-            cb(this);
+        if (callback) {
+            callback(this);
         }
     }
 
+    /**
+     * This method injects all plugin dependencies.
+     * @function
+     * @param {Object} plugin The plugin module.
+     * @returns {Program}
+     */
     use(plugin) {
         this.logger('use', plugin.name, plugin);
         this.plugins[plugin.name] = plugin;

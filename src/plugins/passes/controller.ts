@@ -5,10 +5,10 @@ const Model = require('./model').default;
 const Service = require('./service').default;
 
 /**
- * TODO - Describe what your controller does.
  *
- * @class         Passes
- * @module        Passes
+ * @class           PassesController
+ * @description     This controller handles the routes from the router.
+ * @module        plugins/passes
  * @constructor
  */
 let service;
