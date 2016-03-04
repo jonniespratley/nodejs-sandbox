@@ -17,11 +17,11 @@ let documents = null;
 let app = express();
 
 let mockObj = {
-    id: '{{route}}-1'
+    id: 'devices-1'
 };
 
 
-describe('{{pascalCase name}} Plugin', function () {
+describe('Devices Plugin', function () {
 
     it('should be defined', function (done) {
         assert(Plugin);
@@ -53,14 +53,14 @@ describe('{{pascalCase name}} Plugin', function () {
 
     describe('Model', function () {
         it('should return model', function (done) {
-            let u = new Model({id: 'test-{{route}}-id'});
+            let u = new Model({id: 'test-devices-id'});
             assert(u);
             assert(u.id, 'has passed property');
             done();
         });
 
         it('should return model with unique id', function (done) {
-            let u = new Model({name: '{{route}}'});
+            let u = new Model({name: 'devices'});
             assert(u);
             assert(u.id, 'has id property');
             done();
@@ -75,9 +75,9 @@ describe('{{pascalCase name}} Plugin', function () {
             let m = null
             let createModel = function (id, callback) {
                m = new Model({
-                   id: 'test-{{route}}-'+ id,
-                   name: '{{route}} ' + id,
-                   type: '{{route}}'
+                   id: 'test-devices-'+ id,
+                   name: 'devices ' + id,
+                   type: 'devices'
                });
                 service.save(m).then(function (resp) {
                     callback(null, resp);
@@ -123,7 +123,7 @@ describe('{{pascalCase name}} Plugin', function () {
 
         it('save() should update a pass in data store', function (done) {
             service.save({
-                type: '{{route}}'
+                type: 'devices'
             }).then(function (resp) {
                 console.log(resp);
                 assert(resp);
@@ -196,38 +196,38 @@ describe('{{pascalCase name}} Plugin', function () {
     });
 
 
-        describe('{{pascalCase name}} Router', function () {
+        describe('Devices Router', function () {
 
 
-            it('GET - /{{route}} - should return 200', function (done) {
+            it('GET - /devices - should return 200', function (done) {
                 request(app)
-                    .get('/{{route}}')
+                    .get('/devices')
                     .expect(200, done);
             });
 
-            it('POST - /{{route}} - should return 201', function (done) {
+            it('POST - /devices - should return 201', function (done) {
                 request(app)
-                    .post('/{{route}}')
+                    .post('/devices')
                     .send(mockObj)
                     .expect(201, done);
             });
 
-            it('GET - /{{route}}/:id - should return 200', function (done) {
+            it('GET - /devices/:id - should return 200', function (done) {
                 request(app)
-                    .get('/{{route}}/' + mockObj.id)
+                    .get('/devices/' + mockObj.id)
                     .expect(200, done);
             });
 
-            it('PUT - /{{route}}/:id - should return 200', function (done) {
+            it('PUT - /devices/:id - should return 200', function (done) {
                 request(app)
-                    .put('/{{route}}/' + mockObj.id)
+                    .put('/devices/' + mockObj.id)
                     .send(mockObj)
                     .expect(200, done);
             });
 
-            it('DELETE - /{{route}}/:id - should return 200', function (done) {
+            it('DELETE - /devices/:id - should return 200', function (done) {
                 request(app)
-                    .delete('/{{route}}/' + mockObj.id)
+                    .delete('/devices/' + mockObj.id)
                     .expect(200, done);
             });
         });

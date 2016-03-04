@@ -3,6 +3,8 @@ const path = require('path');
 const assert = require('assert');
 const Model = require('./model').default;
 const Service = require('./service').default;
+const Logger = require('../logger').default;
+const log = new Logger('passes-plugin').getLogger('controller');
 let service;
 
 /**
@@ -23,7 +25,7 @@ export default class PassesController {
      * @param options
      */
     constructor(options:any) {
-        console.log('PassesController Constructor');
+        log('Constructor');
         service = new Service();
     }
 
@@ -34,7 +36,7 @@ export default class PassesController {
      * @param next
      */
     use(req, res, next) {
-        console.log('Passes.use', req.method, req.url, req.params);
+        log('use', req.method, req.url, req.params);
         next();
     }
 
@@ -49,7 +51,7 @@ export default class PassesController {
             req.id = req.params.id;
             console.log('Got id', req.id);
         }
-        console.log('PassesController-controller.all', req.method, req.url);
+        log('all', req.method, req.url);
         next();
     }
 
@@ -63,9 +65,10 @@ export default class PassesController {
         next();
     }
 
+
     get_route(req, res, next) {
-        if (req.id) {
-            service.get(req.id).then((resp) => {
+        if (req.params.id) {
+            service.get(req.params.id).then((resp) => {
                 res.status(200).send(resp);
             }).catch((err) => {
                 res.status(404).send(err);
@@ -87,7 +90,7 @@ export default class PassesController {
      */
     post_route(req, res, next) {
         let m = new Model(req.body);
-        console.log('creating', m);
+        log('creating', m);
 
         service.save(m).then((resp) => {
             res.status(201).send(resp);
@@ -104,7 +107,7 @@ export default class PassesController {
      */
     put_route(req, res, next) {
         var model = new Model(req.body);
-        console.log('updating', req.params.id);
+        log('updating', req.params.id);
 
         service.save(model).then((resp) => {
             res.status(200).send(resp);
@@ -121,7 +124,7 @@ export default class PassesController {
      */
     delete_route(req, res, next) {
         assert(req.params.id, 'has id');
-        console.log('removing', req.params.id);
+        log('removing', req.params.id);
 
         service.remove(req.params.id).then((resp) => {
             res.status(200).send(resp);

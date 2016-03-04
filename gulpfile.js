@@ -98,15 +98,9 @@ gulp.task('watch-coverage', ['pre-test'], function() {
     .pipe(istanbul.writeReports());
 });
 
-gulp.task('watch-compile', function() {
-  return gulp.watch(config.tsSrc, ['typescript']);
-});
-gulp.task('watch', ['watch-test'], function() {
-  return gulp.watch(config.tsSrc, ['typescript']);
-});
-
-gulp.task('watch-test', function() {
-  return gulp.watch(config.specs, ['watch-coverage']);
+gulp.task('watch', function() {
+  gulp.watch(config.tsSrc, ['typescript']);
+  gulp.watch(config.specs, ['mocha']);
 });
 
 
