@@ -17,11 +17,11 @@ let documents = null;
 let app = express();
 
 let mockObj = {
-  id: '{{route}}-1',
-  doctype: '{{dashCase name}}'
+  id: 'posts-1',
+  doctype: 'posts'
 };
 
-describe('{{pascalCase name}} Plugin', function() {
+describe('Posts Plugin', function() {
 
   it('should be defined', function(done) {
     assert(Plugin);
@@ -45,14 +45,14 @@ describe('{{pascalCase name}} Plugin', function() {
 
   describe('Model', function() {
     it('should return model', function(done) {
-      let u = new Model({ id: 'test-{{route}}-id' });
+      let u = new Model({ id: 'test-posts-id' });
       assert(u);
       assert(u.id, 'has passed property');
       done();
     });
 
     it('should return model with unique id', function(done) {
-      let u = new Model({ name: '{{route}}' });
+      let u = new Model({ name: 'posts' });
       assert(u);
       assert(u.id, 'has id property');
       done();
@@ -65,9 +65,9 @@ describe('{{pascalCase name}} Plugin', function() {
       let m = null
       let createModel = function(id, callback) {
         m = new Model({
-          id: 'test-{{dashCase name}}-' + id,
-          name: '{{dashCase name}} ' + id,
-          doctype: '{{dashCase name}}'
+          id: 'test-posts-' + id,
+          name: 'posts ' + id,
+          doctype: 'posts'
         });
         service.save(m).then(function(resp) {
           callback(null, resp);
@@ -89,8 +89,8 @@ describe('{{pascalCase name}} Plugin', function() {
       assert(service);
     });
 
-    it('find() - should get all {{dashCase name}} documents from data store', function(done) {
-      service.find({ doctype: '{{dashCase name}}' }).then(function(resp) {
+    it('find() - should get all posts documents from data store', function(done) {
+      service.find({ doctype: 'posts' }).then(function(resp) {
         assert(resp);
         assert(resp.length);
         done();
@@ -100,7 +100,7 @@ describe('{{pascalCase name}} Plugin', function() {
       });
     });
 
-    it('save() - should save a {{dashCase name}} object to data store', function(done) {
+    it('save() - should save a posts object to data store', function(done) {
       service.save(mockObj).then(function(resp) {
         console.log(resp);
         assert(resp);
@@ -111,7 +111,7 @@ describe('{{pascalCase name}} Plugin', function() {
       });
     });
 
-    it('save() should update a {{dashCase name}} object in data store', function(done) {
+    it('save() should update a posts object in data store', function(done) {
       mockObj.newProperty = 'Updated';
       service.save(mockObj).then(function(resp) {
         console.log('SAVED ITEM', resp);
@@ -123,7 +123,7 @@ describe('{{pascalCase name}} Plugin', function() {
       });
     });
 
-    it('get() - should get a {{dashCase name}} object from data store', function(done) {
+    it('get() - should get a posts object from data store', function(done) {
       service.get(mockObj.id).then(function(resp) {
         assert(resp);
         assert(resp.id === mockObj.id, 'returns matching object');
@@ -134,7 +134,7 @@ describe('{{pascalCase name}} Plugin', function() {
       });
     });
 
-    it('remove() - should remove a {{dashCase name}} object from data store', function(done) {
+    it('remove() - should remove a posts object from data store', function(done) {
       service.remove(mockObj.id).then(function(resp) {
         assert(resp);
         done();
@@ -181,37 +181,37 @@ describe('{{pascalCase name}} Plugin', function() {
       });
     });
   });
-  describe('{{pascalCase name}} Router', function() {
+  describe('Posts Router', function() {
 
-    it('GET - /{{route}} - should return 200', function(done) {
+    it('GET - /posts - should return 200', function(done) {
       request(app)
-        .get('/{{route}}')
+        .get('/posts')
         .expect(200, done);
     });
 
-    it('POST - /{{route}} - should return 201', function(done) {
+    it('POST - /posts - should return 201', function(done) {
       request(app)
-        .post('/{{route}}')
+        .post('/posts')
         .send(mockObj)
         .expect(201, done);
     });
 
-    it('GET - /{{route}}/:id - should return 200', function(done) {
+    it('GET - /posts/:id - should return 200', function(done) {
       request(app)
-        .get('/{{route}}/' + mockObj.id)
+        .get('/posts/' + mockObj.id)
         .expect(200, done);
     });
 
-    it('PUT - /{{route}}/:id - should return 200', function(done) {
+    it('PUT - /posts/:id - should return 200', function(done) {
       request(app)
-        .put('/{{route}}/' + mockObj.id)
+        .put('/posts/' + mockObj.id)
         .send(mockObj)
         .expect(200, done);
     });
 
-    it('DELETE - /{{route}}/:id - should return 200', function(done) {
+    it('DELETE - /posts/:id - should return 200', function(done) {
       request(app)
-        .delete('/{{route}}/' + mockObj.id)
+        .delete('/posts/' + mockObj.id)
         .expect(200, done);
     });
   });

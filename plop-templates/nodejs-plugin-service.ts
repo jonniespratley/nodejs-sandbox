@@ -21,17 +21,17 @@ export default class Service {
     db:any;
 
     constructor(db:any) {
-			if(db){
-				this.db = db;
-			} else {
-				//this.users = db.sublevel('users');
-        this.db = new Store('data', {
-            //type: 'single',
-            saveId: '_id',
-            pretty: true
-        });
-			}
-      log('Service Constructor');
+        if (db) {
+            this.db = db;
+        } else {
+            //this.users = db.sublevel('users');
+            this.db = new Store('data', {
+                //type: 'single',
+                saveId: '_id',
+                pretty: true
+            });
+        }
+        log('Service Constructor');
     }
 
     get(id:any) {
@@ -42,7 +42,7 @@ export default class Service {
                 log('get', err, resp);
                 if (err || !resp) {
                     reject({
-                      error: `Pass ${id} not found!`
+                        error: `Pass ${id} not found!`
                     });
                 }
                 resolve(resp);
@@ -51,14 +51,14 @@ export default class Service {
     }
 
     remove(id:string) {
-      if(!id){
-        throw new Error('Must provide id!');
-        //reject('Must provide an id!');
-      }
+        if (!id) {
+            throw new Error('Must provide id!');
+            //reject('Must provide an id!');
+        }
         return new Promise((resolve, reject)=> {
             log('remove', id);
             this.db.delete(id, (err, resp)=> {
-              resp = resp || id;
+                resp = resp || id;
                 log('remove', 'response', resp);
                 if (err) {
                     reject(err);
@@ -71,7 +71,7 @@ export default class Service {
     save(obj:any) {
         return new Promise((resolve, reject)=> {
             log('save', obj);
-            this.db.save(obj.id || null,  obj, (err, resp)=> {
+            this.db.save(obj.id || null, obj, (err, resp)=> {
                 log('save', err, resp);
                 if (err) {
                     reject(err);
@@ -93,12 +93,15 @@ export default class Service {
                 _.forIn(resp, (value, key) => {
                     _docs.push(value);
                 });
-                if(params){
-                   _resp =  _.filter(_docs, params);
+                if (params) {
+                    //params.doctype = 'device';
+                    log('find', 'filter', params);
+
+                    resolve(_.filter(_docs, params));
                 } else {
-                    _resp = _docs;
+                    resolve(_docs);
                 }
-                resolve(_docs);
+
 
             });
         });

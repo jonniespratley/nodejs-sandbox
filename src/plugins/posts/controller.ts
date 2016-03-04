@@ -4,7 +4,7 @@ const assert = require('assert');
 const Model = require('./model').default;
 const Service = require('./service').default;
 const Logger = require('../logger').default;
-const log = new Logger('Devices').getLogger('controller');
+const log = new Logger('Posts').getLogger('controller');
 let service;
 
 /**
