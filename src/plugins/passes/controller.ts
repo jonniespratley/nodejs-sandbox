@@ -8,10 +8,10 @@ const log = new Logger('passes-plugin').getLogger('controller');
 let service;
 
 /**
- * TODO - Describe what your controller does.
  *
- * @class         Passes
- * @module        Passes
+ * @class           PassesController
+ * @description     This controller handles the routes from the router.
+ * @module        plugins/passes
  * @constructor
  */
 export default class PassesController {

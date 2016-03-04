@@ -8,10 +8,8 @@ const log = new Logger('{{pascalCase name}}').getLogger('controller');
 let service;
 
 /**
- * TODO - Describe what your controller does.
- *
- * @class
- * @module        {{pascalCase name}}
+ * @class         {{pascalCase name}}Controller
+ * @module        plugins/{{pascalCase name}}
  * @constructor
  */
 export default class {{pascalCase name}}Controller {
@@ -106,20 +104,20 @@ export default class {{pascalCase name}}Controller {
      * @param next
      */
     put_route(req, res, next) {
-      if(req.params.id){
-        req.body.id = req.params.id;
-      }
-      let model = new Model(req.body);
-      log('updating', req.params.id);
-      service.get(model.id).then((resp) => {
-        service.save(model).then((resp) => {
-            res.status(200).send(resp);
+        if(req.params.id){
+            req.body.id = req.params.id;
+        }
+        let model = new Model(req.body);
+        log('updating', req.params.id);
+        service.get(model.id).then((resp) => {
+            service.save(model).then((resp) => {
+                res.status(200).send(resp);
+            }).catch((err) => {
+                res.status(404).send(err);
+            });
         }).catch((err) => {
             res.status(404).send(err);
         });
-      }).catch((err) => {
-          res.status(404).send(err);
-      });
     }
 
     /**
