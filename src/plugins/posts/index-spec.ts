@@ -186,12 +186,16 @@ describe('Posts Plugin', function() {
     it('GET - /posts - should return 200', function(done) {
       request(app)
         .get('/posts')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
     });
 
     it('POST - /posts - should return 201', function(done) {
       request(app)
         .post('/posts')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .send(mockObj)
         .expect(201, done);
     });
@@ -199,20 +203,51 @@ describe('Posts Plugin', function() {
     it('GET - /posts/:id - should return 200', function(done) {
       request(app)
         .get('/posts/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
+    });
+
+    it('GET - /posts/unknown - should return 404', function(done) {
+      request(app)
+        .get('/posts/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
     });
 
     it('PUT - /posts/:id - should return 200', function(done) {
       request(app)
         .put('/posts/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .send(mockObj)
         .expect(200, done);
+    });
+
+    it('PUT - /posts/unknown - should return 404', function(done) {
+      request(app)
+        .put('/posts/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .send(mockObj)
+        .expect(404, done);
     });
 
     it('DELETE - /posts/:id - should return 200', function(done) {
       request(app)
         .delete('/posts/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
+    });
+
+    it('DELETE - /posts/:id - should return 404', function(done) {
+      request(app)
+        .delete('/posts/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
     });
   });
 

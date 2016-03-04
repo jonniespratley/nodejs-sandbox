@@ -2,7 +2,7 @@
 const path = require('path');
 const assert = require('assert');
 const Model = require('./model').default;
-const Service = require('./service').default;
+const PostsService = require('./service').default;
 const Logger = require('../logger').default;
 const log = new Logger('Posts').getLogger('controller');
 let service;
@@ -10,13 +10,13 @@ let service;
 /**
  * TODO - Describe what your controller does.
  *
- * @class         Passes
- * @module        Passes
+ * @class
+ * @module        Posts
  * @constructor
  */
-export default class Controller {
+export default class PostsController {
 
-    //service:Service;
+    service:PostsService;
     model:Model;
     collection:any;
 
@@ -26,7 +26,7 @@ export default class Controller {
      */
     constructor(options:any) {
         log('Constructor');
-        service = new Service();
+        service = new PostsService();
     }
 
     /**
@@ -106,14 +106,20 @@ export default class Controller {
      * @param next
      */
     put_route(req, res, next) {
-        var model = new Model(req.body);
-        log('updating', req.params.id);
-
+      if(req.params.id){
+        req.body.id = req.params.id;
+      }
+      let model = new Model(req.body);
+      log('updating', req.params.id);
+      service.get(model.id).then((resp) => {
         service.save(model).then((resp) => {
             res.status(200).send(resp);
         }).catch((err) => {
             res.status(404).send(err);
         });
+      }).catch((err) => {
+          res.status(404).send(err);
+      });
     }
 
     /**

@@ -186,12 +186,16 @@ describe('{{pascalCase name}} Plugin', function() {
     it('GET - /{{route}} - should return 200', function(done) {
       request(app)
         .get('/{{route}}')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
     });
 
     it('POST - /{{route}} - should return 201', function(done) {
       request(app)
         .post('/{{route}}')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .send(mockObj)
         .expect(201, done);
     });
@@ -199,20 +203,51 @@ describe('{{pascalCase name}} Plugin', function() {
     it('GET - /{{route}}/:id - should return 200', function(done) {
       request(app)
         .get('/{{route}}/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
+    });
+
+    it('GET - /{{route}}/unknown - should return 404', function(done) {
+      request(app)
+        .get('/{{route}}/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
     });
 
     it('PUT - /{{route}}/:id - should return 200', function(done) {
       request(app)
         .put('/{{route}}/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .send(mockObj)
         .expect(200, done);
+    });
+
+    it('PUT - /{{route}}/unknown - should return 404', function(done) {
+      request(app)
+        .put('/{{route}}/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .send(mockObj)
+        .expect(404, done);
     });
 
     it('DELETE - /{{route}}/:id - should return 200', function(done) {
       request(app)
         .delete('/{{route}}/' + mockObj.id)
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done);
+    });
+
+    it('DELETE - /{{route}}/:id - should return 404', function(done) {
+      request(app)
+        .delete('/{{route}}/unknown')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
     });
   });
 
