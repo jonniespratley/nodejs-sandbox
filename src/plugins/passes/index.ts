@@ -4,22 +4,22 @@ const Model = require('./model').default;
 const Router = require('./router').default;
 const Service = require('./service').default;
 const express = require('express');
-
 /**
- * This is the Passes Plugin
- * @module        Passes
- * @constructor
+ * @class         PassesPlugin
+ * @module        plugins/passes
+ *
+ * @example
+ * app = express();
+ * instance = new Plugin(app);
  */
 export default class Passes {
-    name:string;
-    options:object;
+
     Controller:Controller;
     Model:Model;
     Router:Router;
     Service:Service;
 
     /**
-     * Initialize the app
      * @constructor
      * @param app
      */
@@ -28,5 +28,4 @@ export default class Passes {
         console.log('Plugin Constructor');
 
     }
-
 }

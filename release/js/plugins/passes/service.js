@@ -7,8 +7,8 @@ var Model = require('./model').default;
 var Logger = require('../logger').default;
 var log = new Logger('passes-plugin').getLogger('service');
 /**
- * @class         Users
- * @module        Users
+ * @class         PassService
+ * @module        plugins/passes
  * @constructor
  */
 var Service = (function () {

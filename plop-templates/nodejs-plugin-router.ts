@@ -1,35 +1,35 @@
- 'use strict';
+'use strict';
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const Controller = require('./controller').default;
+const  {{pascalCase name}}Controller = require('./controller').default;
 /**
- * @class         {{route}} Router
- * @module        Users
- // curl -X GET http://localhost:3000/users/2
- // curl -X POST -d "name=flops&description=sandals&price=12.00" http://localhost:3000/users
- // curl -X PUT -d "name=flipflops&description=sandals&price=12.00" http://localhost:3000/users/3
- // curl -X DELETE http://localhost:3000/users/2
+ * @class         {{pascalCase name}}Router
+ * @module        plugins/{{pascalCase name}}
  * @constructor
  */
-export default class Router {
-    constructor(app:express) {
-        console.log('Router Constructor');
+export default class {{pascalCase name}}Router {
 
-        const controller = new Controller();
-        const router = express();
+  constructor(app:express) {
+    console.log(' {{pascalCase name}}Router Constructor');
 
-        router.use(controller.use);
-        router.all('/{{route}}/*', controller.all);
-        router.get('/{{route}}?', controller.get_route);
-        router.get('/{{route}}/:id?', controller.get_route)
-        router.delete('/{{route}}/:id', controller.delete_route)
-        router.post('/{{route}}', bodyParser.json(), controller.post_route)
-        router.put('/{{route}}/:id', bodyParser.json(), controller.put_route)
+    const controller = new  {{pascalCase name}}Controller();
+    const router = new express.Router();
 
-        router.use(bodyParser.json());
+    router.use(controller.use);
+    router.use(bodyParser.json());
 
+    router.route('{{route}}?')
+        .all(controller.all)
+        .get(controller.get_route)
+        .post(bodyParser.json(), controller.post_route);
 
-        app.use('/', router);
-    }
+    router.route('{{route}}/:id?')
+        .all(controller.all)
+        .get(controller.get_route)
+        .put(bodyParser.json(), controller.put_route)
+        .delete(controller.delete_route);
+
+    app.use('/', router);
+  }
 }

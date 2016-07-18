@@ -13,31 +13,31 @@ module.exports = function(plop) {
 				name: "name",
 				message: "What is your plugin name?"
 			},
-			/*
-						{
-							type: 'confirm',
-							name: 'wantModel',
-							message: 'Do you want a Model?'
-						},
+/*
+			{
+				type: 'confirm',
+				name: 'wantModel',
+				message: 'Do you want a Model?'
+			},
 
-						{
-							type: 'confirm',
-							name: 'wantController',
-							message: 'Do you want a Controller?'
-						}, {
-							type: 'confirm',
-							name: 'wantService',
-							message: 'Do you want a Service?'
-						}, {
-							type: 'confirm',
-							name: 'wantRouter',
-							message: 'Do you want a Router?'
-						},
-			*/
+			{
+				type: 'confirm',
+				name: 'wantController',
+				message: 'Do you want a Controller?'
+			}, {
+				type: 'confirm',
+				name: 'wantService',
+				message: 'Do you want a Service?'
+			}, {
+				type: 'confirm',
+				name: 'wantRouter',
+				message: 'Do you want a Router?'
+			},
+*/
 			{
 				type: "input",
 				name: "route",
-				message: "What is your route name? (my route = /my/route)"
+				message: "What is your route? (/my/route)"
 			}
 		],
 		actions: function(answers) {
@@ -50,9 +50,11 @@ module.exports = function(plop) {
 			];
 
 			answers.wantService = true;
-			answers.wantController = true;
 			answers.wantRouter = true;
 			answers.wantModel = true;
+			answers.wantController = true;
+
+
 
 			if (answers.wantService) {
 				actions.push({

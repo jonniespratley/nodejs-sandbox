@@ -5,17 +5,14 @@ const path = require('path');
 const Store = require('jfs');
 const Model = require('./model').default;
 
-const Logger = require('../logger').default;
-const log = new Logger('passes-plugin').getLogger('service');
-
 /**
- * @class         Users
- * @module        Users
+ * @class         {{pascalCase name}}Router
+ * @module        plugins/{{pascalCase name}}
  * @constructor
  */
 export default class Service {
-    name:string;
-    options:object;
+
+
     models:any;
     model:any;
     db:any;
@@ -24,42 +21,35 @@ export default class Service {
         if (db) {
             this.db = db;
         } else {
-            //this.users = db.sublevel('users');
             this.db = new Store('data', {
-                //type: 'single',
-                saveId: '_id',
                 pretty: true
             });
         }
-        log('Service Constructor');
+        console.log('Service Constructor');
     }
 
     get(id:any) {
         let self = this;
         return new Promise((resolve, reject)=> {
-            log('get', id);
+            console.log('get', id);
             this.db.get(id, (err, resp)=> {
-                log('get', err, resp);
-                if (err || !resp) {
-                    reject({
-                        error: `Pass ${id} not found!`
-                    });
+                console.log('get', err, resp);
+                if (err) {
+                    reject(err);
                 }
                 resolve(resp);
             });
         });
     }
 
-    remove(id:string) {
+    remove(id:any) {
         if (!id) {
-            throw new Error('Must provide id!');
-            //reject('Must provide an id!');
+            throw new Erorr('Must provide id!');
         }
         return new Promise((resolve, reject)=> {
-            log('remove', id);
+            console.log('remove', id);
             this.db.delete(id, (err, resp)=> {
-                resp = resp || id;
-                log('remove', 'response', resp);
+                console.log('remove', err, resp);
                 if (err) {
                     reject(err);
                 }
@@ -70,13 +60,13 @@ export default class Service {
 
     save(obj:any) {
         return new Promise((resolve, reject)=> {
-            log('save', obj);
-            this.db.save(obj.id || null, obj, (err, resp)=> {
-                log('save', err, resp);
+            console.log('save', obj);
+            this.db.save(obj.id, obj, (err, resp)=> {
+                console.log('save', err, resp);
                 if (err) {
                     reject(err);
                 }
-                resolve(obj);
+                resolve(resp);
             });
         });
     }
@@ -107,7 +97,5 @@ export default class Service {
         });
     }
 
-    static method2() {
-        log('method2');
-    }
+
 }

@@ -3,30 +3,24 @@ const Controller = require('./controller').default;
 const Model = require('./model').default;
 const Router = require('./router').default;
 const Service = require('./service').default;
- 
 
 /**
- * This is the Passes Plugin
+ * @class         Passes
  * @module        Passes
  * @constructor
  */
-export default class Plugin {
-    name:string;
-    options:object;
-    Controller:Controller;
-    Model:Model;
-    Router:Router;
-    Service:Service;
+export default class {{pascalCase name}} {
+	name:string;
+	options:object;
+	Controller:Controller;
+	Model:Model;
+	Router:Router;
+	Service:Service;
 
-    /**
-     * Initialize the app
-     * @constructor
-     * @param app
-     */
-    constructor(app:any) {
-        this.Router = new Router(app);
-        console.log('Plugin Constructor');
+	constructor(app:any) {
+		this.Router = new Router(app);
+		console.log('{{pascalCase name}} Plugin Constructor');
 
-    }
+	}
 
 }
