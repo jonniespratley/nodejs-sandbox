@@ -6,7 +6,7 @@ var Service = require('./service').default;
 var express = require('express');
 /**
  * @class         PassesPlugin
- * @module        plugins/passes
+ * @module        Passes
  *
  * @example
  * app = express();

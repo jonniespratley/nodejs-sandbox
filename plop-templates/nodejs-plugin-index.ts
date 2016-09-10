@@ -19,7 +19,7 @@ export default class {{pascalCase name}} {
 
 	constructor(app:any) {
 		this.Router = new Router(app);
-		console.log('{{pascalCase name}} Plugin Constructor');
+		
 
 	}
 

@@ -1,5 +1,7 @@
 'use strict';
 const gulp = require('gulp');
+const gulpSequence = require('gulp-sequence');
+
 const mocha = require('gulp-mocha');
 const istanbul = require('gulp-istanbul');
 const coveralls = require('gulp-coveralls');
@@ -25,7 +27,7 @@ gulp.task('mocha', function() {
     }));
 });
 
-gulp.task('test', ['pre-test'], function() {
+gulp.task('coverage', function() {
   return gulp.src(config.specs)
     .pipe(mocha({
       read: false
@@ -38,3 +40,5 @@ gulp.task('test', ['pre-test'], function() {
       process.exit();
     });
 });
+
+gulp.task('test', gulpSequence('compile', 'pre-test', 'coverage', 'coveralls'));

@@ -1,5 +1,5 @@
 //routes.js
-var asyncModule = require('./asyncModule');
+var asyncModule = require('./plugins/async-plugin');
 
 module.exports.say = function(req, res) {
   asyncModule.tellMeSomething(function(err, something) {

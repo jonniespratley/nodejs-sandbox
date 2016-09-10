@@ -19,12 +19,12 @@ describe('Service Locator', function () {
 
     it('should register service', function (done) {
         ServiceLocator.register('mockService', mockService);
-        assert(ServiceLocator.get('mockService'));
+        assert(ServiceLocator.get('mockService') === mockService);
         done();
     });
 
     it('should return registered service', function (done) {
-        assert(ServiceLocator.get('mockService').name);
+        assert(ServiceLocator.get('mockService').name === 'test');
         done();
     });
 });
