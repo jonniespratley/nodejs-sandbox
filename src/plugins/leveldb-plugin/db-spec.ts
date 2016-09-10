@@ -32,7 +32,7 @@ describe('leveldb-plugin', function () {
         });
     });
 
-    xit('createValueStream() - should get stream', function (done) {
+    it('createValueStream() - should get stream', function (done) {
         db.createValueStream().on('data', function (data) {
             assert(data);
             console.log('value=', data);
