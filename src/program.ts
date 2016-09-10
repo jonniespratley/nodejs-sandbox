@@ -13,7 +13,6 @@ export default class Program extends DiContainer {
     options:any;
     plugins:any;
     logger:any;
-
     constructor(options:any) {
         super('program', options);
         this.initialized = false;
@@ -44,20 +43,22 @@ export default class Program extends DiContainer {
     }
 
     /**
-     * This method initializes the program and invokes the callback when complete.
+     * Initializes the program and invokes the callback when complete.
      * @function
      * @param {Function} callback The callback function to invoke.
      */
     run(callback) {
         this.initialized = true;
-        this.logger('run');
+        this.logger('run', this.options);
         if (callback) {
-            callback(this);
+            this.logger('run.callback');
+          return callback(this);
         }
+        return this;
     }
 
     /**
-     * This method injects all plugin dependencies.
+     * Injects all plugin dependencies.
      * @function
      * @param {Object} plugin The plugin module.
      * @returns {Program}

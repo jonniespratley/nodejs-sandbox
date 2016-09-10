@@ -3,25 +3,25 @@ const express = require('express');
 const PORT = process.env.PORT || 5252;
 
 
-//const BlogPlugin = require('./release/js/plugins/blog-plugin').default;
+const BlogPlugin = require('./src/plugins/blog-plugin');
 const PassesPlugin = require('./release/js/plugins/passes').default;
-const DevicesPlugin = require('./release/js/plugins/passkit-devices').default;
+//const DevicesPlugin = require('./release/js/plugins/passkit-devices').default;
 const Program = require('./release/js/program').default;
 
 let app = express();
 
-let instance = new Program({
+new Program({
 	debug: true,
 	plugins: [
-		DevicesPlugin,
+		BlogPlugin,
+		//DevicesPlugin,
 		PassesPlugin
 	],
-	run: function () {
-		app.set('program', instance);
+	run: function (instance) {
+		app.locals.program = instance;
+
 		app.listen(PORT, function () {
 			console.log('Express server started on port', PORT);
 		});
 	}
 });
-
-
