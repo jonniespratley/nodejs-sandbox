@@ -6,7 +6,6 @@ var getLogger = function (name) {
     return debug( 'nodejs:' + name);
 };
 const log = getLogger('DIContainer');
-
 var dependencies = {};
 var factories = {};
 

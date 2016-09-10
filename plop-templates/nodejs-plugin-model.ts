@@ -1,20 +1,14 @@
 'use strict';
 const _ = require('lodash');
 /**
- * TODO - Describe what your model does.
- *
- * @class         {{pascalCase name}}
- * @module        {{pascalCase name}}
+ * @class         {{pascalCase name}}Model
+ * @module        plugins/{{pascalCase name}}
  * @constructor
  */
-export default class Model {
+export default class  {{pascalCase name}}Model {
 	id: string;
-	constructor(obj:any){
-
-		_.forEach(obj, (prop) =>{
-			this[prop] = obj[prop];
-			console.log('Model', prop, '=', obj[prop]);
-		});
-    this.id = obj.id || _.uniqueId('user-');
+	constructor(obj:any) {
+		_.assign(this, obj);
+		this.id = obj.id || _.uniqueId('model-');
 	}
 }

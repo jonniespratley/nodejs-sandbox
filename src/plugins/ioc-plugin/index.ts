@@ -12,6 +12,7 @@ module.exports = function plugin() {
     route: '/newRoute',
     handler: function(req, res) {
       console.log('plugin handler', req.url);
+      res.status(200).send({message: 'Hello'});
     }
   };
 };

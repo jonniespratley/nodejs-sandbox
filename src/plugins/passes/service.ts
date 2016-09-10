@@ -9,8 +9,8 @@ const Logger = require('../logger').default;
 const log = new Logger('passes-plugin').getLogger('service');
 
 /**
- * @class         Users
- * @module        Users
+ * @class         PassService
+ * @module        plugins/passes
  * @constructor
  */
 export default class Service {
@@ -40,8 +40,10 @@ export default class Service {
             log('get', id);
             this.db.get(id, (err, resp)=> {
                 log('get', err, resp);
-                if (err) {
-                    reject(err);
+                if (err || !resp) {
+                    reject({
+                      error: `Pass ${id} not found!`
+                    });
                 }
                 resolve(resp);
             });
@@ -87,11 +89,8 @@ export default class Service {
                 if (err) {
                     reject(err);
                 }
-
                 log('find', 'response', resp);
                 _.forIn(resp, (value, key) => {
-                    log(key);
-                    log('find', params, value);
                     _docs.push(value);
                 });
                 if(params){

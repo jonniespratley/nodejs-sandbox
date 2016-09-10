@@ -3,7 +3,7 @@ const Controller = require('./controller').default;
 const Model = require('./model').default;
 const Router = require('./router').default;
 const Service = require('./service').default;
-const express = require('express');
+
 /**
  * @class         Passes
  * @module        Passes
@@ -17,7 +17,7 @@ export default class {{pascalCase name}} {
 	Router:Router;
 	Service:Service;
 
-	constructor(app:express) {
+	constructor(app:any) {
 		this.Router = new Router(app);
 		console.log('{{pascalCase name}} Plugin Constructor');
 

@@ -4,10 +4,11 @@ const express = require('express');
 const request = require('supertest');
 const App = require('./app').default;
 const Plugin = require('./plugins/app-plugin');
-let instance;
-let app = express();
+
 
 describe('App', function () {
+    let instance;
+    let app = express();
     it('should be defined', function (done) {
         assert(App);
         done();

@@ -1,0 +1,13 @@
+---
+applications:
+  - name: nodejs-sandbox
+    buildpack: https://github.com/cloudfoundry/heroku-buildpack-nodejs.git
+    memory: 64M
+    stack: cflinuxfs2
+    path: .
+    command: node index.js
+    services:
+      - my_uaa_instance
+    env:
+      #NODE_ENV: 'production'
+      DEBUG: '*'

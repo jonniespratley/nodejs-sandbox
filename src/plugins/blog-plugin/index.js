@@ -37,6 +37,6 @@ module.exports = function(program) {
 
   app.use('/blog', blog);
   blog.use('/admin', blogAdmin);
-
+  console.log('Blog Plugin', 'blog');
   return blog;
 };

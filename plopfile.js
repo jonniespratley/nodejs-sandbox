@@ -13,7 +13,7 @@ module.exports = function(plop) {
 				name: "name",
 				message: "What is your plugin name?"
 			},
-
+/*
 			{
 				type: 'confirm',
 				name: 'wantModel',
@@ -33,11 +33,11 @@ module.exports = function(plop) {
 				name: 'wantRouter',
 				message: 'Do you want a Router?'
 			},
-
+*/
 			{
 				type: "input",
 				name: "route",
-				message: "What is your route name? (my route = /my/route)"
+				message: "What is your route? (/my/route)"
 			}
 		],
 		actions: function(answers) {
@@ -48,6 +48,13 @@ module.exports = function(plop) {
 					templateFile: "plop-templates/nodejs-plugin-index.ts"
 				}
 			];
+
+			answers.wantService = true;
+			answers.wantRouter = true;
+			answers.wantModel = true;
+			answers.wantController = true;
+
+
 
 			if (answers.wantService) {
 				actions.push({
