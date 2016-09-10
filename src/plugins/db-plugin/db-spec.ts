@@ -5,7 +5,7 @@ const DB = require('./').default;
 var db = null;
 
 describe('db-plugin', function () {
-
+  this.timeout(20000);
     before(function (done) {
         db = new DB('data');
         var createUser = function (id, callback) {
