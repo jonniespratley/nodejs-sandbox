@@ -26,6 +26,9 @@ export default class Service {
             });
         }
         console.log('Service Constructor');
+        log = new Logger('blockchain-plugin').getLogger('service');
+        this.log = log;
+        log.info('created');
     }
 
     get(id:any) {

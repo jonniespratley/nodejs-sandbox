@@ -3,7 +3,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-
+/**
+ * @class         AuthPlugin
+ * @module        AuthPlugin
+ *
+ * @example
+ * app = express();
+ * instance = new AuthPlugin(app);
+ */
 module.exports = function (program) {
     var serviceLocator = program;
 

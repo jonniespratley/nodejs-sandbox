@@ -36,7 +36,7 @@ export default class Program extends DiContainer {
         super.plugin('Logger', require('./plugins/logger').default);
         super.plugin('db', require('./plugins/db-plugin').default);
 
-        this.logger('constructor', options);
+        this.logger.info('constructor', options);
         if (options.run) {
             this.run(options.run);
         }
@@ -49,13 +49,15 @@ export default class Program extends DiContainer {
      */
     run(callback) {
       console.log('Loading plugins', this.options.plugins);
-      this.options.plugins.forEach(function(p){
+     if(this.options.plugins){
+         this.options.plugins.forEach(function(p){
 
-      });
+         });
+     }
         this.initialized = true;
-        this.logger('run', this.options);
+        this.logger.info('run', this.options);
         if (callback) {
-            this.logger('run.callback');
+            this.logger.info('run.callback');
           return callback(this);
         }
         return this;
@@ -68,7 +70,7 @@ export default class Program extends DiContainer {
      * @returns {Program}
      */
     use(plugin) {
-        this.logger('use', plugin.name, plugin);
+        this.logger.info('use', plugin.name, plugin);
         this.plugins[plugin.name] = plugin;
         super.inject(plugin);
         return this;

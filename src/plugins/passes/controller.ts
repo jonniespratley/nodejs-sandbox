@@ -25,7 +25,7 @@ export default class PassesController {
      * @param options
      */
     constructor(options:any) {
-        log('Constructor');
+        log.info('Constructor');
         service = new Service();
     }
 
@@ -36,7 +36,7 @@ export default class PassesController {
      * @param next
      */
     use(req, res, next) {
-        log('use', req.method, req.url, req.params);
+        log.info('use', req.method, req.url, req.params);
         next();
     }
 
@@ -49,9 +49,9 @@ export default class PassesController {
     all(req, res, next) {
         if (req.params.id) {
             req.id = req.params.id;
-            console.log('Got id', req.id);
+            log.info('Got id', req.id);
         }
-        log('all', req.method, req.url);
+        log.info('all', req.method, req.url);
         next();
     }
 
@@ -90,7 +90,7 @@ export default class PassesController {
      */
     post_route(req, res, next) {
         let m = new Model(req.body);
-        log('creating', m);
+        log.info('creating', m);
 
         service.save(m).then((resp) => {
             res.status(201).send(resp);
@@ -107,7 +107,7 @@ export default class PassesController {
      */
     put_route(req, res, next) {
         var model = new Model(req.body);
-        log('updating', req.params.id);
+        log.info('updating', req.params.id);
 
         service.save(model).then((resp) => {
             res.status(200).send(resp);
@@ -124,7 +124,7 @@ export default class PassesController {
      */
     delete_route(req, res, next) {
         assert(req.params.id, 'has id');
-        log('removing', req.params.id);
+        log.info('removing', req.params.id);
 
         service.remove(req.params.id).then((resp) => {
             res.status(200).send(resp);

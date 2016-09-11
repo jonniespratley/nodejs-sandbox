@@ -7,7 +7,7 @@ var db = null;
 describe('leveldb-plugin', function () {
 
     before(function () {
-        db = new DB('db');
+        db = new DB('tmp-db');
     });
     after(function () {
         db.close();

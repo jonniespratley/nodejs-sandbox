@@ -15,10 +15,13 @@ describe('db-plugin', function () {
         };
         async.times(5, function (n, next) {
             createUser(n, function (err, user) {
+                assert(user);
                 next(err, user)
+
             });
         }, function (err, users) {
-            console.log('created', users);
+            //console.log('created', users);
+            assert(users.length)
             done();
         });
     });
@@ -33,8 +36,13 @@ describe('db-plugin', function () {
     it('should create instance', function () {
         assert(db);
     });
+    it('should thro error if no name', function () {
+        assert.throws(function(){
+          new DB();
+        });
+    });
 
-    it('put() - should do put', function (done) {
+    it('put() - should put document', function (done) {
         db.put('test-doc', {name: 'db-plugin'}).then(function (resp) {
             assert(resp);
             done();
@@ -42,16 +50,17 @@ describe('db-plugin', function () {
     });
 
 
-    it('get() - should get key value', function (done) {
+    it('get() - should get document key value', function (done) {
         db.get('test-doc').then(function (resp) {
             assert(resp);
             done();
         });
     });
 
-    it('find(params) - should return array', function (done) {
+    it('find(params) - should return array of documents', function (done) {
         db.find({}).then(function (resp) {
             assert(resp);
+            assert(resp.length);
             done();
         });
     });
@@ -63,6 +72,20 @@ describe('db-plugin', function () {
         }).catch(function (err) {
             assert.fail(err);
             done();
+        });
+    });
+    it('remove() - should fail to remove unknown key', function (done) {
+        db.remove('unknown-doc').then(function (resp) {
+            assert.fail(resp);
+            done();
+        }).catch(function (err) {
+            assert.ok(err);
+            done();
+        });
+    });
+    it('remove() - should thro error if no id', function () {
+        assert.throws(function(){
+          db.remove();
         });
     });
 
