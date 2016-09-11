@@ -9,7 +9,11 @@ docs
 .tmp
 .c9
 *-db
+./db-*
+!./src/db-plugin
 npm-debug.log
 db
+db-*.json
 data
 test-db
+out

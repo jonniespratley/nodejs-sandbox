@@ -25,21 +25,21 @@ export default class Service {
 				this.db = db;
 			} else {
 				//this.users = db.sublevel('users');
-        this.db = new Store('data', {
-            //type: 'single',
+        this.db = new Store('db-passes', {
+            type: 'single',
             saveId: '_id',
             pretty: true
         });
 			}
-      log('Service Constructor');
+      log.info('Service Constructor');
     }
 
     get(id:any) {
         let self = this;
         return new Promise((resolve, reject)=> {
-            log('get', id);
+
             this.db.get(id, (err, resp)=> {
-                log('get', err, resp);
+
                 if (err || !resp) {
                     reject({
                       error: `Pass ${id} not found!`
@@ -56,10 +56,10 @@ export default class Service {
         //reject('Must provide an id!');
       }
         return new Promise((resolve, reject)=> {
-            log('remove', id);
+            log.info('remove', id);
             this.db.delete(id, (err, resp)=> {
               resp = resp || id;
-                log('remove', 'response', resp);
+                log.info('remove', 'response', resp);
                 if (err) {
                     reject(err);
                 }
@@ -70,9 +70,9 @@ export default class Service {
 
     save(obj:any) {
         return new Promise((resolve, reject)=> {
-            log('save', obj);
+            log.info('save', obj);
             this.db.save(obj.id || null,  obj, (err, resp)=> {
-                log('save', err, resp);
+                log.info('save', err, resp);
                 if (err) {
                     reject(err);
                 }
@@ -84,12 +84,12 @@ export default class Service {
     find(params:any) {
         return new Promise((resolve, reject)=> {
             let _docs = [], _resp;
-            log('find', params);
+            log.info('find', params);
             this.db.all((err, resp)=> {
                 if (err) {
                     reject(err);
                 }
-                log('find', 'response', resp);
+                log.info('find', 'response', resp);
                 _.forIn(resp, (value, key) => {
                     _docs.push(value);
                 });
@@ -105,6 +105,6 @@ export default class Service {
     }
 
     static method2() {
-        log('method2');
+        log.info('method2');
     }
 }

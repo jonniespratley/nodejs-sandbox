@@ -2,7 +2,19 @@
 let dependencies = {};
 let factories = {};
 let serviceLocator = {};
-
+/**
+ * This is the Passes Plugin
+ * @module        ServiceLocator
+ * @class        ServiceLocator
+ *
+ * @example
+ * const ServiceLocator = require('').default;
+ * let mockService = {
+ *      name: 'test'
+ * };
+ * ServiceLocator.register('mockService', mockService);
+ * ServiceLocator.get('mockService').name
+ */
 export default class ServiceLocator {
     dependencies:any;
     factories:any;

@@ -72,8 +72,6 @@ gulp.task('watch', function() {
   gulp.watch(config.specs, ['watch-coverage']);
 });
 
-
-
 gulp.task('clean', function() {
   return gulp.src([
       'data',
@@ -91,10 +89,8 @@ gulp.task('clean', function() {
 
 
 gulp.task('default', gulpSequence('compile', 'test'));
+
+
 try {
-  require('require-dir')('tasks');
-} catch (e) {
-
-} finally {
-
-}
+  require('require-dir')('./tasks');
+} catch (e) {}

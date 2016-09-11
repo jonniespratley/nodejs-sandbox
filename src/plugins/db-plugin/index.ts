@@ -2,31 +2,39 @@
 const _ = require('lodash');
 const Store = require('jfs');
 const Logger = require('../logger').default;
-
+const assert = require('assert');
 let log = null;
-
+/**
+ * @module DB
+ 8 @description This is a file sstem database.
+ * @example
+ * var db = new DB('tmp');
+ */
 export default class DB {
     db:any;
     constructor(dbName:string) {
+      assert(dbName, 'must provide database name');
         this.db = new Store(dbName, {
             pretty: true
         });
         log = new Logger('db-plugin').getLogger(dbName);
+        this.log = log;
+        log.info('created', dbName);
     }
 
     find(params:any) {
         return new Promise((resolve, reject)=> {
             let _docs = [];
-            console.log('find', params);
+            log.info('find', params);
             this.db.all((err, resp)=> {
                 if (err) {
+                    log.error('find', 'error', err);
                     reject(err);
                 }
 
-                console.log('find', 'response', resp);
+                log.info('find', 'success', resp);
                 _.forIn(resp, (value, key) => {
-                    console.log(key);
-                    console.log('find', params, value);
+                    //log.info('find', params, value);
                     _docs.push(value);
                 });
                 resolve(_.filter(_docs, params));
@@ -37,11 +45,16 @@ export default class DB {
 
 
     get(id:string) {
+      if (!id) {
+        throw new Erorr('Must provide id!');
+      }
         return new Promise((resolve, reject)=> {
-            console.log('get', id);
+            assert(id, 'must provide id');
+            log.info('get', id);
             this.db.get(id, (err, resp)=> {
-                console.log('get', err, resp);
+                log.info('get', 'success', resp);
                 if (err) {
+                  log.error('get', 'error', err);
                     reject(err);
                 }
                 resolve(resp);
@@ -50,27 +63,31 @@ export default class DB {
     }
 
     remove(id:string) {
+      log.info('remove', id);
         if (!id) {
-            throw new Erorr('Must provide id!');
+          throw new Erorr('Must provide id!');
         }
         return new Promise((resolve, reject)=> {
-            console.log('remove', id);
+            log.info('remove', id);
             this.db.delete(id, (err, resp)=> {
-                console.log('remove', err, resp);
+                log.info('remove', id, 'success');
                 if (err) {
+                    log.error('remove', 'error', err);
                     reject(err);
                 }
-                resolve(true);
+                resolve(id);
             });
         });
     }
 
     put(id:string, obj:any) {
         return new Promise((resolve, reject)=> {
-            console.log('save', obj);
+            log.info('put', id);
+            obj.created = Date.now();
             this.db.save(id, obj, (err, resp)=> {
-                console.log('save', err, resp);
+                log.info('put', id, 'success');
                 if (err) {
+                    log.error('put', 'error', err);
                     reject(err);
                 }
                 resolve(resp);
@@ -79,10 +96,10 @@ export default class DB {
     }
 
     open() {
-        log('open');
+        log.info('open');
     }
 
     close() {
-        log('open');
+        log.info('open');
     }
 }
