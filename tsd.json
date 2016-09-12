@@ -28,6 +28,15 @@
     },
     "requirejs/require.d.ts": {
       "commit": "0c5c7a2d2bd0ce7dcab963a8402a9042749ca2da"
+    },
+    "supertest/supertest.d.ts": {
+      "commit": "0c5c7a2d2bd0ce7dcab963a8402a9042749ca2da"
+    },
+    "superagent/superagent.d.ts": {
+      "commit": "0c5c7a2d2bd0ce7dcab963a8402a9042749ca2da"
+    },
+    "assert/assert.d.ts": {
+      "commit": "0c5c7a2d2bd0ce7dcab963a8402a9042749ca2da"
     }
   }
 }

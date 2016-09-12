@@ -23,14 +23,16 @@ gulp.task('pre-test', function() {
 gulp.task('mocha', function() {
   return gulp.src(config.specs)
     .pipe(mocha({
-      read: false
+      read: false,
+      reporter: 'mochawesome'
     }));
 });
 
 gulp.task('coverage', function() {
   return gulp.src(config.specs)
     .pipe(mocha({
-      read: false
+      read: false,
+      reporter: 'mochawesome'
     }))
     .pipe(istanbul.writeReports())
     .once('error', function() {

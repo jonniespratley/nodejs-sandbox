@@ -17,3 +17,5 @@ db-*.json
 data
 test-db
 out
+mochawesome-reports
+tmp-db

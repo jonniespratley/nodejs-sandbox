@@ -21,18 +21,79 @@ describe('App', function () {
         assert(instance);
         done();
     });
-
-    describe('App Routes', function () {
-        it('should load plugin', function (done) {
-            Plugin(instance);
+       it('should load plugin', function (done) {
+            var AppPlugin = require('./plugins/app-plugin');
+            AppPlugin(instance);
             done();
+        });       
+     it('GET - /newRoute - should return 200', function (done) {
+        request(instance)
+            .get('/newRoute')
+            .set('Content-Type', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200, done);
+    });
+
+    describe('Plugins', function () {
+        
+      
+        
+        it('should load plugin', function () {
+            function TagsPlugin(app, namespace) {
+              console.log('app-plugin', 'namespace', namespace);
+              return app.route('/tags/:id?')
+                .all(function(req, res, next) {
+                  console.log('tags plugin middleware', req.method, req.url);
+                  next();
+                })
+                .get(function(req, res, next) {
+                  res.status(200).json({
+                    message: 'Welcome'
+                  });
+                })
+                .put(function(req, res, next) {
+                  res.status(200).json({
+                    message: 'Updated'
+                  });
+                })
+                .post(function(req, res, next) {
+                  res.status(201).json({
+                    message: 'Saved'
+                  });
+                })
+                .delete(function(req, res, next) {
+                  res.status(200).json({
+                    message: 'Removed'
+                  });
+                });
+            };
+            var p = TagsPlugin(instance);
+            assert(p);
         });
-        it('GET - /newRoute - should return 200', function (done) {
+        
+        it('should mounted routes', function(done){
             request(instance)
-                .get('/newRoute')
+                .get('/tags/1')
                 .set('Content-Type', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
+        });
+        it('should mounted put route', function(done){
+            request(instance)
+                .put('/tags/1')
+                .send({name: 'test'})
+                .set('Content-Type', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+        
+         it('should mounted post route', function(done){
+            request(instance)
+                .post('/tags')
+                .send({name: 'test'})
+                .set('Content-Type', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(201, done);
         });
     });
 });
