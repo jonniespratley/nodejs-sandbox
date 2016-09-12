@@ -24,7 +24,6 @@ export default class Service {
 			if(db){
 				this.db = db;
 			} else {
-				//this.users = db.sublevel('users');
         this.db = new Store('db-passes', {
             type: 'single',
             saveId: '_id',

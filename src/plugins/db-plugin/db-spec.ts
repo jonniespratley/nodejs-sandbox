@@ -7,7 +7,7 @@ var db = null;
 describe('db-plugin', function () {
   this.timeout(20000);
     before(function (done) {
-        db = new DB('data');
+        db = new DB('data', {type: 'memory'});
         var createUser = function (id, callback) {
             db.put('test-doc-' + id, {name: 'test doc ' + id}).then(function (resp) {
                 callback(null, resp);

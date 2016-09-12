@@ -8,13 +8,15 @@ const npmlog = require('npmlog');
 export default class Logger {
     constructor(name:string){
         this.namespace = name;
-        console.log('Logger instance');
         this.instance = npmlog;
         this.instance.heading = name;
     }
     getLogger(category) {
         //return debug(`${this.namespace}:${category}`);
         return this.instance;
+    }
+    getDebugger(category) {
+        return debug(`${this.namespace}:${category}`);
     }
 
 }

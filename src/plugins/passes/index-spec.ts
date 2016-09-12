@@ -44,11 +44,11 @@ describe('Passes Plugin', function () {
         done();
     });
 
-    describe('Controller', function () {
+    describe('Passes Controller', function () {
 
     });
 
-    describe('Model', function () {
+    describe('Passes Model', function () {
         it('should return model', function (done) {
             let u = new Model({id: 'test-id'});
             assert(u);
@@ -64,7 +64,7 @@ describe('Passes Plugin', function () {
         });
     });
 
-    describe('Service', function () {
+    describe('Passes Service', function () {
 
         before(function (done) {
             service = new Service();
