@@ -4,16 +4,10 @@ const levelup = require('levelup');
 const Logger = require('../logger').default;
 //const leveldb = require('leveldb');
 
-export default function DB(dbName) {
+export default function DB(dbName, cb) {
 
-   // leveldb.open("./db", { create_if_missing: true }, onOpen);
-    /*
-
-
-     function onOpen(err, db) {
-     db = db;
-     }
-     */
+  
+     
     if (!dbName) {
         dbName = 'db';
     }

@@ -30,4 +30,8 @@ describe('nodejs-sandbox',  ()=> {
         assert(nodeSandbox.ServiceLocator);
         done();
     });
+     it('DIContainer = should be defined', (done) => {
+        assert(nodeSandbox.DIContainer);
+        done();
+    });
 });

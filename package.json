@@ -1,6 +1,6 @@
 {
   "name": "nodejs-sandbox",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A sandbox for nodejs",
   "main": "release/js/index.js",
   "repository": {
