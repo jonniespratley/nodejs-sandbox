@@ -9,19 +9,24 @@ const PassesPlugin = require('./release/js/plugins/passes').default;
 const Program = require('./release/js/program').default;
 
 let app = express();
-
+app.use(new BlogPlugin());
+/*
 new Program({
 	debug: true,
+	  namespace: 'nodejs-sandbox',
 	plugins: [
-		BlogPlugin,
+		//BlogPlugin,
 		//DevicesPlugin,
-		PassesPlugin
+	//	PassesPlugin
 	],
 	run: function (instance) {
 		app.locals.program = instance;
 
+		new BlogPlugin(instance);
+
+	}
+});
+*/
 		app.listen(PORT, function () {
 			console.log('Express server started on port', PORT);
 		});
-	}
-});

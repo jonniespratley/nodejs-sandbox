@@ -13,6 +13,7 @@
     "plop-templates",
     "node_modules",
     "typings",
+    "release",
     "wwwroot"
   ]
 }

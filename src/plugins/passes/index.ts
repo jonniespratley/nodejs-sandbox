@@ -12,7 +12,7 @@ const express = require('express');
  * app = express();
  * instance = new Plugin(app);
  */
-export default class Passes {
+export default class Router {
 
     Controller:Controller;
     Model:Model;
@@ -24,8 +24,10 @@ export default class Passes {
      * @param app
      */
     constructor(app:express) {
-        this.Router = new Router(app);
-        console.log('Plugin Constructor');
 
+        console.log('Router Constructor');
+        //this.Router = new Router(app);
+        //app.use(this);
+        //app.use('/', new Router(app));
     }
 }

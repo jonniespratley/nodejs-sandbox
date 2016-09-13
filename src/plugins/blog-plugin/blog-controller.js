@@ -1,7 +1,6 @@
 'use strict';
 module.exports = function (Logger, BlogService) {
-    var log = Logger.getLogger('blog-controller');
-
+  const log = require('debug')(`blog-plugin:ctrl`);
     var BlogController = {};
 
     BlogController.index = function (req, res, next) {

@@ -1,7 +1,8 @@
 "use strict";
 module.exports = function (db, Logger) {
-    const log = Logger.getLogger('blog-service');
-    const posts = db.sublevel('posts');
+
+    const log = require('debug')(`blog-plugin:service`);
+    const posts = db;
 
     class BlogService {
         constructor() {

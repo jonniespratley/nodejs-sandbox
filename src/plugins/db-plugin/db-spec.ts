@@ -12,6 +12,7 @@ describe('db-plugin', function () {
             db.put('test-doc-' + id, {name: 'test doc ' + id}).then(function (resp) {
                 callback(null, resp);
             });
+            
         };
         async.times(5, function (n, next) {
             createUser(n, function (err, user) {

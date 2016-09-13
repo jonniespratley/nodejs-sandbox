@@ -11,3 +11,4 @@ const DIContainer = require('./plugins/di-container').default;
 
 
 module.exports = {App, DB, Logger, ServiceLocator, Program, Sandbox, DIContainer};
+ 

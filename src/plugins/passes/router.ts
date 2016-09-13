@@ -27,6 +27,7 @@ export default class Router {
         router.use(bodyParser.json());
 
 
-        app.use('/', router);
+        
+        return this
     }
 }

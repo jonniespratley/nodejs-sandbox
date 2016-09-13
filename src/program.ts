@@ -7,36 +7,38 @@ const DiContainer = require('./plugins/di-container').default;
  * @class Program
  *
  */
+ const log = require('debug')(`nodejs-sandbox:program`);
 export default class Program extends DiContainer {
-    modules:any;
-    initialized:boolean;
-    options:any;
-    plugins:any;
-    logger:any;
-    constructor(options:any) {
+    modules: any;
+    initialized: boolean;
+    options: any;
+    plugins: any;
+    logger: any;
+    constructor(options: any) {
         super('program', options);
         this.initialized = false;
         this.plugins = {};
 
         options = options || {
-                namespace: 'nodejs-sandbox',
-                dbName: 'data'
-            };
+            namespace: 'nodejs-sandbox',
+            dbName: 'data'
+        };
         this.options = options;
-        this.namespace = options.namespace;
+
         this.dbName = options.dbName;
-        this.logger = new Logger(options.namespace || 'nodejs-sandbox').getLogger('program');
+        this.logger = log || new Logger(options.namespace || 'nodejs-sandbox').getLogger('program');
 
         this.app = new App(options);
         super.register('app', this.app);
-        super.register('namespace', this.namespace);
+        super.register('namespace', options.namespace);
+        super.register('name', 'program');
         super.register('dbName', this.dbName);
         super.register('program', this);
 
-        super.plugin('Logger', require('./plugins/logger').default);
-        super.plugin('db', require('./plugins/db-plugin').default);
+        super.register('Logger', require('./plugins/logger').default);
+        super.register('db', require('./plugins/db-plugin').default);
 
-        this.logger.info('constructor', options);
+      //  this.logger.info('constructor', options);
         if (options.run) {
             this.run(options.run);
         }
@@ -48,17 +50,17 @@ export default class Program extends DiContainer {
      * @param {Function} callback The callback function to invoke.
      */
     run(callback) {
-      console.log('Loading plugins', this.options.plugins);
-     if(this.options.plugins){
-         this.options.plugins.forEach(function(p){
-
-         });
-     }
+        console.log('Loading plugins', this.options.plugins);
+        if (this.options.plugins) {
+            this.options.plugins.forEach((p) => {
+              this.use(p);
+            });
+        }
         this.initialized = true;
-        this.logger.info('run', this.options);
+        console.log('run', this.options);
         if (callback) {
-            this.logger.info('run.callback');
-          return callback(this);
+            this.logger('run.callback');
+            return callback(this);
         }
         return this;
     }
@@ -70,7 +72,7 @@ export default class Program extends DiContainer {
      * @returns {Program}
      */
     use(plugin) {
-        this.logger.info('use', plugin.name, plugin);
+        console.log('use', plugin.name, plugin);
         this.plugins[plugin.name] = plugin;
         super.inject(plugin);
         return this;

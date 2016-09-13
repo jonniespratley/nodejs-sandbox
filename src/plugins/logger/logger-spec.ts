@@ -9,6 +9,7 @@ describe('Logger Plugin', ()=>{
     it('should be defined', ()=>{
         assert(Logger);
     });
+    
 
     it('getLogger(category) - should return logging instance.', ()=>{
         log = Logger.getLogger('spec');

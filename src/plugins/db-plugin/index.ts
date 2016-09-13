@@ -12,12 +12,13 @@ let log = null;
  */
 export default class DB {
     db:any;
+    
     constructor(dbName:string, options:object) {
       assert(dbName, 'must provide database name');
         this.db = new Store(dbName, options || {
             pretty: true
         });
-        log = new Logger('db-plugin').getLogger(dbName);
+        log = require('debug')(`db-plugin:${dbName}`);
         this.log = log;
         log.info('created', dbName, options);
     }
